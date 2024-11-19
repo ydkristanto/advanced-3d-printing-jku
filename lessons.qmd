@@ -1,0 +1,50 @@
+---
+title: "Mathematics Exploration with 3D Printing"
+author: "Yosep Dwi Kristanto"
+format: html
+editor: visual
+execute: 
+  echo: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(rayshader)
+```
+
+# Lesson 1: Intro to Matrix
+
+Let's explore some data representations!
+
+::: {.callout-note icon="false"}
+## Notice and Wonder
+
+```{r}
+data_matriks <- tibble(
+  x = rep(1:3, times = 3),
+  y = rep(1:3, each = 3),
+  z = c(1, 3, 1,
+        3, 5, 2,
+        2, 1, 3)
+)
+plot_tile <- data_matriks |> 
+  ggplot(aes(x = x, y = y)) + 
+  geom_tile(
+    aes(fill = z),
+    show.legend = FALSE
+  ) + 
+  scale_fill_viridis_c() + 
+  theme_void()
+plot_gg(plot_tile, scale = 200, multicore = TRUE)
+```
+
+What do you notice? What do you wonder?
+:::
+
+# Lesson 2: Building 3D Model with Matrix
+
+# Lesson 3: Volume
