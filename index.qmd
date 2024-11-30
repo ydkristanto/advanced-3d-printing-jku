@@ -75,9 +75,9 @@ Students will be able to represent real-world data (such as temperature or topog
 
 **Lesson 3:**
 
-Students will be able to use real-world topographical data (elevation matrix) to create a 3D model of a selected location.
+-   Students will be able to use real-world topographical data (elevation matrix) to create a 3D model of a selected location.
 
-Students will be able to print the 3D model using a 3D printer, turning abstract data into a physical representation.
+-   Students will be able to print the 3D model using a 3D printer, turning abstract data into a physical representation.
 
 ### Standards
 
