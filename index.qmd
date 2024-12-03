@@ -13,6 +13,7 @@ format:
     toc: true
     anchor-sections: true
     smooth-scroll: true
+    code-link: true
 editor: visual
 execute: 
   echo: false
@@ -28,7 +29,7 @@ library(plotly)
 library(rayshader)
 ```
 
-:::::::::: panel-tabset
+::::::::::::: panel-tabset
 ## Preparation
 
 ### Lesson Narrative
@@ -346,7 +347,75 @@ Let's bring matrices to life with 3D printing!
 What do you notice? What do you wonder?
 :::
 
+::: {.callout-note icon="false"}
+## Exploring Elevation Data Online
+
+The Shuttle Radar Topography Mission (SRTM) was a NASA mission that mapped the Earth's surface to produce high-resolution elevation data. This data is invaluable for understanding topography and has wide-ranging applications, from environmental modeling and urban planning to disaster risk assessment. By representing elevation data in a matrix form, we can use mathematical tools to analyze and visualize terrains, making it easier to study and solve real-world problems.
+
+1.  What type of information does the SRTM elevation data provide? How could it be used in real-world applications?
+
+2.  Explore [the Derek Watkins' Tile Downloader website](https://dwtkns.com/srtm30m/){target="_blank"}. How is the elevation data presented? What do "30-meter resolution" and "tile" mean?
+
+3.  How might the data from a single tile be represented as a matrix? What does each value in the matrix represent in terms of elevation?
+
+4.  If you wanted to use this data to create a physical 3D model, what steps would you take, starting from the downloaded data?
+:::
+
+::: {.callout-note icon="false"}
+## Elevating Data into 3D Models
+
+1.  How can elevation values in a matrix represent the physical features of a landscape?
+
+2.  If we visualize this matrix as a grid, how would the differences between adjacent elevation values appear in a 3D model?
+
+3.  What steps are needed to turn a matrix of elevation data into a 3D model? Can you describe these steps in terms of inputs, processes, and outputs?
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## Are You Ready for More?
+
+One way to create a 3D model from elevation data is by using R programming with packages such as [{rayshader}](https://CRAN.R-project.org/package=rayshader){target="_blank"}, [{terra}](https://CRAN.R-project.org/package=terra){target="_blank"}, and [{raster}](https://CRAN.R-project.org/package=raster){target="_blank"}. Below are the codes that will help you generate the 3D model of Mount Merapi.
+
+``` r
+# Step 1
+library(rayshader)
+library(terra)
+library(raster)
+
+# Step 2
+S08E110 <- terra::rast("S08E110.hgt")
+merapi_boundaries <- raster::extent(
+  110.3967, 110.4967,
+  -7.590278, -7.490278
+)
+merapi_matrix <- terra::crop(
+  x = S08E110,
+  y = merapi_boundaries
+) |> 
+  rayshader::raster_to_matrix()
+
+# Step 3
+merapi_hillshade <- sphere_shade(
+  heightmap = merapi_matrix
+)
+plot_3d(
+  hillshade = merapi_hillshade,
+  heightmap = merapi_matrix,
+  zscale = 30
+)
+
+# Step 4
+save_3dprint(
+  filename = "merapi_3d.stl",
+  maxwidth = 150,
+  unit = "mm"
+)
+```
+
+Can you explain what each step of the code does?
+:::
+
 ## Practice
 
 Hello!
-::::::::::
+:::::::::::::
