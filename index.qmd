@@ -8,6 +8,7 @@ author:
     affiliation-url: https://www.jku.at/en
     orcid: 0000-0003-1446-0422
 date: 2024/11/25
+lightbox: true
 format:
   html:
     toc: true
@@ -339,7 +340,7 @@ Let's turn matrices into 3D models!
 
 Let's bring matrices to life with 3D printing!
 
-::: {.callout-note icon="false"}
+::: {.callout-note .lightbox icon="false"}
 ## Notice and Wonder
 
 ![Image: konsepsi.wordpress.com](merapi_model_1.jpg)
