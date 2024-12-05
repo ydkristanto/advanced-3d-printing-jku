@@ -408,7 +408,45 @@ Observe how the matrix values are represented in the heatmap. Experiment by chan
 :::
 
 ::: {.callout-note icon="false"}
-## Visualizing Real Data
+## Visualizing Social Media Platform Overlaps
+
+@tbl-sm-overlaps shows the percentage of active users (age 16+) outside China who also use other social media platforms.
+
+|  | Using Youtube | Using Facebook | Using WhatsApp | Using Instagram | Using TikTok |
+|----|----|----|----|----|----|
+| Youtube users | 100 | 74.6 | 70.7 | 76.9 | 48.4 |
+| Facebook users | 73.5 | 100 | 73.3 | 77.9 | 53.2 |
+| WhatsApp users | 75.3 | 77.8 | 100 | 78.8 | 49.9 |
+| Instagram users | 77.1 | 80.5 | 76.6 | 100 | 53.7 |
+| TikTok users | 77.2 | 81.9 | 72.5 | 80.1 | 100 |
+
+: Social media platform audience overlaps. Source: [DataReportal](https://datareportal.com/social-media-users){target="_blank"} {#tbl-sm-overlaps}
+
+1.  Use the data from @tbl-sm-overlaps to create a matrix in R and name it `matrix_sm_overlaps`.
+
+2.  Assign appropriate row and column names using the `rownames()` and `colnames()` functions to represent the social media platforms.
+
+3.  Visualize the overlaps by creating a heatmap from the matrix.
+
+```{webr}
+#| exercise: ex_1
+
+matrix_sm_overlaps <- matrix(
+  data = ______,
+  nrow = ______,
+  byrow = ______,
+)
+
+rownames(matrix_sm_overlaps) <- c("Youtube users", ______)
+colnames(matrix_sm_overlaps) <- c("Using Youtube", ______)
+
+heatmap(
+  x = ______,
+  Rowv = _____,
+  Colv = _____,
+  scale = _____
+)
+```
 :::
 
 ## Lesson 3
