@@ -32,7 +32,7 @@ library(plotly)
 library(rayshader)
 ```
 
-::::::::::::::::::: panel-tabset
+:::::::::::::::::::: panel-tabset
 ## Preparation
 
 ### Lesson Narrative
@@ -412,8 +412,8 @@ Observe how the matrix values are represented in the heatmap. Experiment by chan
 
 @tbl-sm-overlaps shows the percentage of active users (age 16+) outside China who also use other social media platforms.
 
-|  | Using Youtube | Using Facebook | Using WhatsApp | Using Instagram | Using TikTok |
-|----|----|----|----|----|----|
+|   | Using Youtube | Using Facebook | Using WhatsApp | Using Instagram | Using TikTok |
+|------------|------------|------------|------------|------------|------------|
 | Youtube users | 100 | 74.6 | 70.7 | 76.9 | 48.4 |
 | Facebook users | 73.5 | 100 | 73.3 | 77.9 | 53.2 |
 | WhatsApp users | 75.3 | 77.8 | 100 | 78.8 | 49.9 |
@@ -445,6 +445,85 @@ heatmap(
   Rowv = _____,
   Colv = _____,
   scale = _____
+)
+```
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## Are You Ready for More?
+
+Take a look at the code below and think about what it's doing.
+
+```{r}
+#| echo: true
+
+matrix_example_3 <- matrix(
+  data = c(0, 1, 0, 1, 0, 1, 0, 1, 0),
+  nrow = 3,
+  byrow = TRUE
+)
+
+red_blue <- colorRampPalette(
+  colors = c("red", "blue")
+)
+
+heatmap(
+  x = matrix_example_3,
+  Rowv = NA,
+  Colv = NA,
+  labRow = NA,
+  labCol = NA,
+  scale = "none",
+  col = red_blue(2)
+)
+
+```
+
+Now, using the idea from the previous code, create a chessboard pattern as a heatmap of a matrix! Your result should look similar to the example shown in @fig-chessboard.
+
+```{r}
+#| label: fig-chessboard
+#| fig-cap: "A chessboard"
+mtrx_cb <- matrix(
+  data = rep(c(rep(c(1, 0), 4), rep(c(0, 1), 4)), 4),
+  ncol = 8,
+  byrow = TRUE
+)
+
+bl_wh <- colorRampPalette(c("white", "black"))
+
+heatmap(
+  x = mtrx_cb,
+  Rowv = NA,
+  Colv = NA,
+  labRow = NA,
+  labCol = NA,
+  scale = "none",
+  col = bl_wh(2)
+)
+```
+
+```{webr}
+#| exercise: ex_2
+
+matrix_chessboard <- matrix(
+  data = ______,
+  nrow = ______,
+  byrow = ______,
+)
+
+black_white <- colorRampPalette(
+  colors = c(______)
+)
+
+heatmap(
+  x = ______,
+  Rowv = NA,
+  Colv = NA,
+  labRow = NA,
+  labCol = NA,
+  scale = "none",
+  col = ______
 )
 ```
 :::
@@ -536,4 +615,4 @@ save_3dprint(
 ## Practice
 
 Hello!
-:::::::::::::::::::
+::::::::::::::::::::
