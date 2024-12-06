@@ -32,7 +32,7 @@ library(plotly)
 library(rayshader)
 ```
 
-:::::::::::::::::::: panel-tabset
+::::::::::::::::::::::::: panel-tabset
 ## Preparation
 
 ### Lesson Narrative
@@ -41,7 +41,7 @@ This lesson builds on concepts from previous units and introduces the matrix as 
 
 In Lesson 1, students will learn how to represent real-world data using matrices and interpret the information presented in matrix form. Through this process, they will develop skills in analyzing data representations, identifying key messages, and evaluating the effectiveness and efficiency of different representations. By the end of the lesson, students will have a deeper understanding of how matrices can be used to organize and convey data, and they will be introduced to matrices as a powerful tool for data representation.
 
-In Lesson 2, students will learn how to represent data in a matrix format and then transform it into a 3D model using a 3D printer. They will start by visualizing the matrix data as a heatmap, and then use this heatmap to create a 3D model. Finally, students will print their 3D model using a 3D printer. Through this process, students will see how abstract matrix data can be brought to life in the physical world.
+In Lesson 2, students will explore how to represent data in a matrix format and transform it into visualizations, including heatmaps and 3D models. They will begin by creating and modifying matrices in R, using heatmaps to uncover patterns and relationships within the data. Building on this, students will analyze different representations—matrices, heatmaps, and 3D visualizations—comparing their strengths and applications. Finally, they will investigate the steps involved in creating 3D models from matrices, connecting abstract data representation to practical and visual outcomes.
 
 In Lesson 3, students will use real-world topographical data to create and print a physical model. They will start by using NASA Earth data to obtain an elevation matrix of a location of their choice. This data will then be modeled into a 3D representation, which students will print using a 3D printer. By the end of the lesson, students will have created a tangible topographical model from real-world elevation data.
 
@@ -75,7 +75,7 @@ Students will be able to represent real-world data (such as temperature or topog
 
 -   Students will be able to convert a matrix into a heatmap and interpret the data visualization.
 
--   Students will be able to transform the heatmap into a 3D model and print it using a 3D printer.
+-   Students will be able to compare matrices, heatmaps, and 3D models to understand how each represents data.
 
 **Lesson 3:**
 
@@ -332,9 +332,9 @@ Using a matrix to represent temperature data makes it easier to analyze and spot
 
 ## Lesson 2
 
-### From Matrix to 3D Visualization
+### From Numbers to Visualization: Exploring Matrices, Heatmaps, and 3D Models
 
-Let's turn matrices into 3D models!
+Let's turn matrices into heatmaps and 3D models!
 
 :::::: {.callout-note icon="false"}
 ## Notice and Wonder
@@ -528,6 +528,36 @@ heatmap(
 ```
 :::
 
+:::: {.callout-note icon="false"}
+## Exploring Data Representations: From Matrix to 3D Model
+
+Heatmaps are just one way to represent a matrix. We can also create a 3D model from a matrix. Below, you’ll find three representations of the same data:
+
+::: {#fig-three-reps layout-ncol="3"}
+![Matrix](a_matrix.png)
+
+![Heatmap](2D_matrix.png)
+
+![3D model](3D_matrix.png)
+
+Different representations of the same data
+:::
+
+1.  Compare and contrast these three representations. What are the strengths and weaknesses of each?
+
+2.  Now, focus on the 3D visualization. How would you create such a 3D model starting with a matrix? Identify the steps or processes involved.
+::::
+
+::: {.callout-important icon="false"}
+## Summary
+
+Heatmaps and 3D visualizations are practical and engaging ways to represent data from matrices. A matrix, which is a structured grid of numbers organized in rows and columns, allows us to summarize and analyze data effectively. For instance, a heatmap can be used to visually represent the values in a matrix with color gradients, making patterns, overlaps, or trends easy to spot.
+
+Imagine you’re analyzing social media usage overlaps, where each cell in the matrix represents the percentage of users shared between platforms. A heatmap of this matrix would use colors to highlight these overlaps, with stronger colors for higher percentages. Similarly, we can take this idea further by creating a 3D visualization, where the numbers in the matrix determine the height of each block in a 3D model.
+
+Through this lesson, you saw how matrices can transform from abstract numbers into powerful visual tools. Heatmaps offer an intuitive way to see relationships at a glance, while 3D visualizations provide a tangible, spatial perspective on the same data. Together, these representations help uncover insights and bring data to life.
+:::
+
 ## Lesson 3
 
 ### Modeling the World: Topography with Matrices
@@ -612,7 +642,19 @@ save_3dprint(
 2.  What do you think the result of the code will look like? You can download the resulting STL file [here](https://github.com/ydkristanto/advanced-3d-printing-jku/blob/main/merapi_3d.stl){target="_blank"}. To view it, you can use an STL viewer, such as [viewstl.com](https://www.viewstl.com/){target="_blank"}.
 :::
 
+::: {.callout-note icon="false"}
+## 3D Printing the Model
+
+Let's print the 3D model! Use the STL file from the previous activity to print the model using a 3D printer.
+:::
+
+::: callout-important
+## Summary
+
+Matrices are a powerful tool for representing and analyzing data in a structured way. By converting elevation data into a matrix, we can visualize topographic features like mountains and valleys. In this lesson, we used matrices to represent elevation data from the Shuttle Radar Topography Mission (SRTM), and then transformed that data into a 3D model, simulating the physical features of the Earth’s surface. This process helps us see how abstract data can be turned into meaningful, real-world representations, such as terrain models, and how mathematics can be applied to understand and visualize landscapes. Through this lesson, you learned how matrices can be used to model topography and how 3D printing brings these models to life.
+:::
+
 ## Practice
 
 Hello!
-::::::::::::::::::::
+:::::::::::::::::::::::::
