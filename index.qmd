@@ -1,7 +1,7 @@
 ---
 title: "Mathematics Exploration with 3D Printing"
 subtitle: "Bringing Data to Life with Matrices and Models"
-description: "This lesson explores how matrices, a fundamental concept in mathematics, can be used for data visualization and real-world applications. Students transform numerical data into heatmaps and 3D models, enabling them to analyze and interpret complex patterns effectively. By incorporating 3D printing, the lesson brings abstract matrix representations to life, offering a tangible connection between mathematics and practical problem-solving."
+description: "This series of learning activities explores the power of matrices in mathematics for organizing and analyzing data. Students learn to use basic R programming to transform matrices into engaging visualizations such as heatmaps and 3D models, making abstract data tangible and intuitive. By integrating 3D printing, the lessons culminate in creating physical models, demonstrating the practical application of data visualization techniques to represent real-world phenomena."
 keywords: 
   - matrix
   - data visualization

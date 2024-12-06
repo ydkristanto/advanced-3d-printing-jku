@@ -6,3 +6,9 @@ website:
   twitter-card:
     creator: "@yosepdwik"
   open-graph: true
+  repo-url: https://github.com/ydkristanto/advanced-3d-printing-jku
+  repo-actions: [edit, issue]
+  navbar: 
+    right: 
+      - icon: github
+        href: https://github.com/ydkristanto/advanced-3d-printing-jku
