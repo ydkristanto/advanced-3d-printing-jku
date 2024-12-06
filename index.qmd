@@ -656,5 +656,54 @@ Matrices are a powerful tool for representing and analyzing data in a structured
 
 ## Practice
 
-Hello!
+1.  Emma wants to know the prices of iPhones on Amazon. She surveys the prices for the 128 GB, 256 GB, and 512 GB models of the iPhone 15 Plus, iPhone 16, iPhone 16 Plus, and iPhone 16 Pro. The prices she found are as follows (in euros):
+
+    -   For 128 GB: iPhone 15 Plus (€919), iPhone 16 (€876), iPhone 16 Plus (€1078), iPhone 16 Pro (€1143)
+
+    -   For 256 GB: iPhone 15 Plus (€1037), iPhone 16 (€1055), iPhone 16 Plus (€1188), iPhone 16 Pro (€1294)
+
+    -   For 512 GB: iPhone 15 Plus (€1289), iPhone 16 (€1269), iPhone 16 Plus (€1354), iPhone 16 Pro (€1592)
+
+    Represent this data as a matrix!
+
+2.  In the interactive code block below, create a matrix named `matrix_iphone_prices` to store the iPhone prices for different models and storage sizes. Then, visualize the matrix as a heatmap to better understand the price differences.
+
+    ```{webr}
+    #| exercise: practice_2
+
+    matrix_iphone_prices <- matrix(
+      data = c(______),
+      nrow = ______,
+      byrow = ______
+    )
+
+    colnames(matrix_iphone_prices) <- c(______)
+    rownames(matrix_iphone_prices) <- c(______)
+
+    heatmap(
+      x = ______,
+      Rowv = NA,
+      Colv = NA,
+      scale = "none"
+    )
+    ```
+
+3.  @fig-practice-3 shows a 3D visualization of a matrix. Write down the matrix with approximate values.
+
+    ![3D visualization of a matrix](matrix_plot_gg.png){#fig-practice-3}
+
+    ```{r}
+    matrix_practice_3 <- matrix(
+      data = c(
+        2, 4, 2, 4,
+        6, 3, 6, 3,
+        2, 3, 2, 3,
+        6, 4, 6, 4
+      ),
+      nrow = 4,
+      byrow = TRUE
+    )
+    ```
+
+4.  Model the topography of your selected places and then print the 3D models!
 :::::::::::::::::::::::::
