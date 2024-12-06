@@ -32,7 +32,7 @@ library(plotly)
 library(rayshader)
 ```
 
-::::::::::::::::::::::::: panel-tabset
+:::::::::::::::::::::::::: panel-tabset
 ## Preparation
 
 ### Lesson Narrative
@@ -648,11 +648,21 @@ save_3dprint(
 Let's print the 3D model! Use the STL file from the previous activity to print the model using a 3D printer.
 :::
 
-::: callout-important
+:::: callout-important
 ## Summary
 
-Matrices are a powerful tool for representing and analyzing data in a structured way. By converting elevation data into a matrix, we can visualize topographic features like mountains and valleys. In this lesson, we used matrices to represent elevation data from the Shuttle Radar Topography Mission (SRTM), and then transformed that data into a 3D model, simulating the physical features of the Earth’s surface. This process helps us see how abstract data can be turned into meaningful, real-world representations, such as terrain models, and how mathematics can be applied to understand and visualize landscapes. Through this lesson, you learned how matrices can be used to model topography and how 3D printing brings these models to life.
+Matrices are a powerful tool for representing and analyzing data in a structured way. By converting elevation data into a matrix, we can visualize topographic features like mountains and valleys. In this lesson, we used matrices to represent elevation data from the Shuttle Radar Topography Mission (SRTM), and then transformed that data into a 3D model, simulating the physical features of the Earth’s surface. For example, we modeled and 3D-printed a representation of Mount Merapi, a well-known active volcano in Indonesia. The outcome of this process is shown in @fig-merapi-model.
+
+::: {#fig-merapi-model layout-ncol="2"}
+![3D model of Mount Merapi](merapi_3d_model.png)
+
+![3D printed model of Mount Merapi](printed_merapi.jpeg)
+
+3D model and 3D printed model of Mount Merapi, created from elevation data, showcasing the transformation from digital representation to physical model.
 :::
+
+This exercise helps us see how abstract data can be turned into meaningful, real-world representations, such as terrain models, and how mathematics can be applied to understand and visualize landscapes. Through this lesson, you learned how matrices can be used to model topography and how 3D printing brings these models
+::::
 
 ## Practice
 
@@ -706,4 +716,4 @@ Matrices are a powerful tool for representing and analyzing data in a structured
     ```
 
 4.  Model the topography of your selected places and then print the 3D models!
-:::::::::::::::::::::::::
+::::::::::::::::::::::::::
