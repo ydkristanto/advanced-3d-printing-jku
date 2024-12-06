@@ -1,6 +1,13 @@
 ---
 title: "Mathematics Exploration with 3D Printing"
 subtitle: "Bringing Data to Life with Matrices and Models"
+description: "This lesson explores how matrices, a fundamental concept in mathematics, can be used for data visualization and real-world applications. Students transform numerical data into heatmaps and 3D models, enabling them to analyze and interpret complex patterns effectively. By incorporating 3D printing, the lesson brings abstract matrix representations to life, offering a tangible connection between mathematics and practical problem-solving."
+keywords: 
+  - matrix
+  - data visualization
+  - heatmap
+  - 3D model
+  - 3D printing
 author:
   - name: Yosep Dwi Kristanto
     url: https://people.usd.ac.id/~ydkristanto/
@@ -8,6 +15,7 @@ author:
     affiliation-url: https://www.jku.at/en
     orcid: 0000-0003-1446-0422
 date: 2024/11/25
+date-modified: 2024/12/06
 lightbox: true
 format:
   live-html:
@@ -15,6 +23,10 @@ format:
     anchor-sections: true
     smooth-scroll: true
     code-link: true
+image: "printed-merapi.jpeg"
+image-alt: "3D printed silver model of Mount Merapi photographed from the 12th floor in Linz, Austria, with a detailed view of the topographic features."
+copyright: "© 2024 Yosep Dwi Kristanto"
+license: "CC BY"
 editor: visual
 execute: 
   echo: false
