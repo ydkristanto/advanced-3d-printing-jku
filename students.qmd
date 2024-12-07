@@ -1,7 +1,7 @@
 ---
-title: "Mathematics Exploration with 3D Printing"
-subtitle: "For Students"
-description: "This series of learning activities explores the power of matrices in mathematics for organizing and analyzing data. You learn to use basic R programming to transform matrices into engaging visualizations such as heatmaps and 3D models, making abstract data tangible and intuitive. By integrating 3D printing, the lessons culminate in creating physical models, demonstrating the practical application of data visualization techniques to represent real-world phenomena."
+title: "For Students"
+subtitle: "Bringing Data to Life with Matrices and Models"
+description: "In this series of activities, you'll discover how matrices in math help us organize and analyze data. You'll learn to use R programming to turn these matrices into cool visualizations like heatmaps and 3D models. Finally, you'll bring your work to life by 3D printing your models, showing how these techniques can be used to represent real-world data in a hands-on way!"
 keywords: 
   - matrix
   - data visualization
@@ -15,7 +15,7 @@ author:
     affiliation-url: https://www.jku.at/en
     orcid: 0000-0003-1446-0422
 date: 2024/11/25
-date-modified: 2024/12/06
+date-modified: 2024/12/07
 lightbox: true
 format:
   live-html:
@@ -44,7 +44,7 @@ library(plotly)
 library(rayshader)
 ```
 
-:::::::::::::::::::::::::: panel-tabset
+::::::::::::::::::::::::::::: panel-tabset
 ## Lesson 1
 
 ### Introduction to Matrix Representation
@@ -268,6 +268,22 @@ $$ In this matrix:
 -   The numbers inside the matrix represent the average temperature for each quarter.
 
 Using a matrix to represent temperature data makes it easier to analyze and spot patterns, such as trends in temperature over time or comparing different years and seasons. Matrices help us organize and interpret data more efficiently, providing clear insights into the information.
+:::
+
+::: {.callout-important icon="false"}
+## Glossary Entries
+
+-   **Data visualization**
+
+    The process of turning numbers or information into pictures, graphs, or charts so that patterns and trends are easier to understand.
+
+-   **Heatmap**
+
+    A type of chart that uses colors to show patterns in data. For example, warmer colors (like red or orange) can show higher values, and cooler colors (like blue) can show lower values.
+
+-   **Matrix**
+
+    A grid of numbers organized in rows and columns, like a table, that helps us organize and analyze data.
 :::
 
 ## Lesson 2
@@ -498,6 +514,30 @@ Imagine you’re analyzing social media usage overlaps, where each cell in the m
 Through this lesson, you saw how matrices can transform from abstract numbers into powerful visual tools. Heatmaps offer an intuitive way to see relationships at a glance, while 3D visualizations provide a tangible, spatial perspective on the same data. Together, these representations help uncover insights and bring data to life.
 :::
 
+::: {.callout-important icon="false"}
+## Glossary Entries
+
+-   `matrix()` function
+
+    The `matrix()` function in R is used to create a matrix. You provide a set of data, define the number of rows (`nrow`), and specify whether the data should be filled by rows or columns using the `byrow` argument. The syntax is `matrix(data, nrow, byrow)`.
+
+-   `heatmap()` function
+
+    The `heatmap()` function in R is used to create a heatmap from a matrix or data frame. It visually represents the values in the matrix using colors, helping to highlight patterns and trends. The function has arguments like `x` (the data matrix), `Rowv`, `Colv` (for hierarchical clustering), and `scale` (to adjust the scaling of the data).
+
+-   `rep()` function
+
+    The `rep()` function in R is used to repeat elements of a vector a specified number of times. It’s helpful for creating matrices where the data follows a repetitive pattern.
+
+-   3D model
+
+    A 3D model is a three-dimensional representation of data, where data points are placed in a three-dimensional space based on their values. This model can provide more depth and perspective compared to a matrix or 2D heatmap, making it useful for visualizing complex data relationships.
+
+-   `colorRampPalette()`
+
+    The colorRampPalette() function in R is used to create a sequence of colors that can be applied to a heatmap. It takes a range of colors and interpolates between them to generate a smooth gradient.
+:::
+
 ## Lesson 3
 
 ### Modeling the World: Topography with Matrices
@@ -604,6 +644,42 @@ Matrices are a powerful tool for representing and analyzing data in a structured
 This exercise helps us see how abstract data can be turned into meaningful, real-world representations, such as terrain models, and how mathematics can be applied to understand and visualize landscapes. Through this lesson, you learned how matrices can be used to model topography and how 3D printing brings these models
 ::::
 
+::: {.callout-important icon="false"}
+## Glossary Entries
+
+-   **STL file**
+
+    A file format commonly used for 3D printing, which stores 3D models in a way that is compatible with most 3D printers. The file contains the surface geometry of the model without any color or texture information. STL stands for "stereolithography," a technology used in 3D printing.
+
+-   **Elevation data**
+
+    Information that describes the height of a location on the Earth's surface relative to sea level. This data is often represented in a matrix format, where each value corresponds to the elevation at a specific point on the terrain.
+
+-   **Shuttle Radar Topography Mission (SRTM)**
+
+    A NASA mission that used radar to measure the Earth's surface and create detailed elevation maps. The SRTM data is widely used for various applications, including environmental modeling, urban planning, and disaster risk assessment.
+
+-   **3D printing**
+
+    A manufacturing process that creates three-dimensional objects by adding material layer by layer based on a digital model. 3D printing allows for the production of complex shapes that might be difficult or impossible to create using traditional methods.
+
+-   **Raster data**
+
+    A type of spatial data represented in grid cells or pixels. Each cell holds a value that represents information such as elevation, temperature, or land cover. Raster data is often used to represent continuous phenomena like elevation or weather patterns.
+
+-   **rayshader**
+
+    An R package used to convert raster or matrix data into 3D models and visualizations. It allows users to create shaded relief maps, terrain models, and 3D plots based on elevation or other spatial data.
+
+-   **terra**
+
+    An R package used for spatial data analysis, specifically designed to handle large raster datasets. It provides tools for reading, manipulating, and processing geospatial data, including elevation data.
+
+-   **raster**
+
+    An R package for working with raster data, including functions for reading, manipulating, and analyzing geospatial raster data. The package supports a variety of raster formats and is commonly used for tasks like terrain analysis.
+:::
+
 ## Practice
 
 1.  Emma wants to know the prices of iPhones on Amazon. She surveys the prices for the 128 GB, 256 GB, and 512 GB models of the iPhone 15 Plus, iPhone 16, iPhone 16 Plus, and iPhone 16 Pro. The prices she found are as follows (in euros):
@@ -656,4 +732,4 @@ This exercise helps us see how abstract data can be turned into meaningful, real
     ```
 
 4.  Model the topography of your selected places and then print the 3D models!
-::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::

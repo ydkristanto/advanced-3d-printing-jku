@@ -3,6 +3,11 @@ project:
   output-dir: docs
 
 website: 
+  title: "Maths Exploration with 3D Printing"
+  favicon: "favicon.png"
+  site-url: "https://ydkristanto.github.io/advanced-3d-printing-jku/"
+  page-navigation: true
+  bread-crumbs: true
   twitter-card:
     creator: "@yosepdwik"
   open-graph: true
@@ -10,5 +15,7 @@ website:
   repo-actions: [edit, issue]
   navbar: 
     right: 
+      - teachers.qmd
+      - students.qmd
       - icon: github
         href: https://github.com/ydkristanto/advanced-3d-printing-jku
