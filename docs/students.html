@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Yosep Dwi Kristanto">
+<meta name="dcterms.date" content="2024-11-25">
+<meta name="keywords" content="matrix, data visualization, heatmap, 3D model, 3D printing">
+<meta name="description" content="This series of learning activities explores the power of matrices in mathematics for organizing and analyzing data. You learn to use basic R programming to transform matrices into engaging visualizations such as heatmaps and 3D models, making abstract data tangible and intuitive. By integrating 3D printing, the lessons culminate in creating physical models, demonstrating the practical application of data visualization techniques to represent real-world phenomena.">
+
+<title>Mathematics Exploration with 3D Printing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="site_libs/plotly-binding-4.10.4/plotly.js"></script>
+
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+
+<link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="Mathematics Exploration with 3D Printing">
+<meta property="og:description" content="This series of learning activities explores the power of matrices in mathematics for organizing and analyzing data. You learn to use basic R programming to transform matrices into engaging visualizations such as heatmaps and 3D models, making abstract data tangible and intuitive. By integrating 3D printing, the lessons culminate in creating physical models, demonstrating the practical application of data visualization techniques to represent real-world phenomena.">
+<meta property="og:image" content="printed_merapi.jpeg">
+<meta name="twitter:title" content="Mathematics Exploration with 3D Printing">
+<meta name="twitter:description" content="This series of learning activities explores the power of matrices in mathematics for organizing and analyzing data. You learn to use basic R programming to transform matrices into engaging visualizations such as heatmaps and 3D models, making abstract data tangible and intuitive. By integrating 3D printing, the lessons culminate in creating physical models, demonstrating the practical application of data visualization techniques to represent real-world phenomena.">
+<meta name="twitter:image" content="printed_merapi.jpeg">
+<meta name="twitter:creator" content="@yosepdwik">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ydkristanto/advanced-3d-printing-jku"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Mathematics Exploration with 3D Printing</h1>
+<p class="subtitle lead">For Students</p>
+</div>
+
+<div>
+  <div class="description">
+    This series of learning activities explores the power of matrices in mathematics for organizing and analyzing data. You learn to use basic R programming to transform matrices into engaging visualizations such as heatmaps and 3D models, making abstract data tangible and intuitive. By integrating 3D printing, the lessons culminate in creating physical models, demonstrating the practical application of data visualization techniques to represent real-world phenomena.
+  </div>
+</div>
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author"><a href="https://people.usd.ac.id/~ydkristanto/">Yosep Dwi Kristanto</a> <a href="https://orcid.org/0000-0003-1446-0422" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://www.jku.at/en">
+            PhD in Education, Johannes Kepler University Linz
+            </a>
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 25, 2024</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">December 6, 2024</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+<div>
+  <div class="keywords">
+    <div class="block-title">Keywords</div>
+    <p>matrix, data visualization, heatmap, 3D model, 3D printing</p>
+  </div>
+</div>
+
+</header>
+
+
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Lesson 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Lesson 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Lesson 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Practice</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<section id="introduction-to-matrix-representation" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-matrix-representation">Introduction to Matrix Representation</h3>
+<p>Let’s explore some data representations!</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Data Talks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div id="fig-temp-yog" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-temp-yog-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-e6067b070277e6e30dfa" style="width:100%;height:365px;"></div>
+<script type="application/json" data-for="htmlwidget-e6067b070277e6e30dfa">{"x":{"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.649999999999999,25.760000000000002,25.690000000000001,25.780000000000001,25.699999999999999,24.359999999999999,23.98,24.09,24.84,26.25,26.140000000000001,26.23],"text":["month: Jan<br />temp: 25.65<br />YEAR: 2011","month: Feb<br />temp: 25.76<br />YEAR: 2011","month: Mar<br />temp: 25.69<br />YEAR: 2011","month: Apr<br />temp: 25.78<br />YEAR: 2011","month: May<br />temp: 25.70<br />YEAR: 2011","month: Jun<br />temp: 24.36<br />YEAR: 2011","month: Jul<br />temp: 23.98<br />YEAR: 2011","month: Aug<br />temp: 24.09<br />YEAR: 2011","month: Sep<br />temp: 24.84<br />YEAR: 2011","month: Oct<br />temp: 26.25<br />YEAR: 2011","month: Nov<br />temp: 26.14<br />YEAR: 2011","month: Dec<br />temp: 26.23<br />YEAR: 2011"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.690000000000001,25.989999999999998,25.68,26.07,25.620000000000001,24.449999999999999,23.780000000000001,24.370000000000001,25.710000000000001,26.489999999999998,26.629999999999999,26.109999999999999],"text":["month: Jan<br />temp: 25.69<br />YEAR: 2012","month: Feb<br />temp: 25.99<br />YEAR: 2012","month: Mar<br />temp: 25.68<br />YEAR: 2012","month: Apr<br />temp: 26.07<br />YEAR: 2012","month: May<br />temp: 25.62<br />YEAR: 2012","month: Jun<br />temp: 24.45<br />YEAR: 2012","month: Jul<br />temp: 23.78<br />YEAR: 2012","month: Aug<br />temp: 24.37<br />YEAR: 2012","month: Sep<br />temp: 25.71<br />YEAR: 2012","month: Oct<br />temp: 26.49<br />YEAR: 2012","month: Nov<br />temp: 26.63<br />YEAR: 2012","month: Dec<br />temp: 26.11<br />YEAR: 2012"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.800000000000001,26.559999999999999,26.379999999999999,26.550000000000001,26.379999999999999,26.039999999999999,24.890000000000001,24.129999999999999,24.530000000000001,26.239999999999998,26.23,25.760000000000002],"text":["month: Jan<br />temp: 25.80<br />YEAR: 2013","month: Feb<br />temp: 26.56<br />YEAR: 2013","month: Mar<br />temp: 26.38<br />YEAR: 2013","month: Apr<br />temp: 26.55<br />YEAR: 2013","month: May<br />temp: 26.38<br />YEAR: 2013","month: Jun<br />temp: 26.04<br />YEAR: 2013","month: Jul<br />temp: 24.89<br />YEAR: 2013","month: Aug<br />temp: 24.13<br />YEAR: 2013","month: Sep<br />temp: 24.53<br />YEAR: 2013","month: Oct<br />temp: 26.24<br />YEAR: 2013","month: Nov<br />temp: 26.23<br />YEAR: 2013","month: Dec<br />temp: 25.76<br />YEAR: 2013"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x3","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.469999999999999,25.969999999999999,26.719999999999999,26.690000000000001,26.829999999999998,26.02,24.800000000000001,24.52,25.039999999999999,26.780000000000001,26.73,25.98],"text":["month: Jan<br />temp: 25.47<br />YEAR: 2014","month: Feb<br />temp: 25.97<br />YEAR: 2014","month: Mar<br />temp: 26.72<br />YEAR: 2014","month: Apr<br />temp: 26.69<br />YEAR: 2014","month: May<br />temp: 26.83<br />YEAR: 2014","month: Jun<br />temp: 26.02<br />YEAR: 2014","month: Jul<br />temp: 24.80<br />YEAR: 2014","month: Aug<br />temp: 24.52<br />YEAR: 2014","month: Sep<br />temp: 25.04<br />YEAR: 2014","month: Oct<br />temp: 26.78<br />YEAR: 2014","month: Nov<br />temp: 26.73<br />YEAR: 2014","month: Dec<br />temp: 25.98<br />YEAR: 2014"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x4","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.629999999999999,26.07,26.18,26.32,25.699999999999999,24.82,24.440000000000001,24.870000000000001,25.649999999999999,27.239999999999998,27.190000000000001,26.649999999999999],"text":["month: Jan<br />temp: 25.63<br />YEAR: 2015","month: Feb<br />temp: 26.07<br />YEAR: 2015","month: Mar<br />temp: 26.18<br />YEAR: 2015","month: Apr<br />temp: 26.32<br />YEAR: 2015","month: May<br />temp: 25.70<br />YEAR: 2015","month: Jun<br />temp: 24.82<br />YEAR: 2015","month: Jul<br />temp: 24.44<br />YEAR: 2015","month: Aug<br />temp: 24.87<br />YEAR: 2015","month: Sep<br />temp: 25.65<br />YEAR: 2015","month: Oct<br />temp: 27.24<br />YEAR: 2015","month: Nov<br />temp: 27.19<br />YEAR: 2015","month: Dec<br />temp: 26.65<br />YEAR: 2015"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x5","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[27.129999999999999,26.460000000000001,27.23,27.239999999999998,27.079999999999998,26.329999999999998,26.079999999999998,25.640000000000001,26.149999999999999,26.210000000000001,26.260000000000002,25.859999999999999],"text":["month: Jan<br />temp: 27.13<br />YEAR: 2016","month: Feb<br />temp: 26.46<br />YEAR: 2016","month: Mar<br />temp: 27.23<br />YEAR: 2016","month: Apr<br />temp: 27.24<br />YEAR: 2016","month: May<br />temp: 27.08<br />YEAR: 2016","month: Jun<br />temp: 26.33<br />YEAR: 2016","month: Jul<br />temp: 26.08<br />YEAR: 2016","month: Aug<br />temp: 25.64<br />YEAR: 2016","month: Sep<br />temp: 26.15<br />YEAR: 2016","month: Oct<br />temp: 26.21<br />YEAR: 2016","month: Nov<br />temp: 26.26<br />YEAR: 2016","month: Dec<br />temp: 25.86<br />YEAR: 2016"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.969999999999999,25.84,26.329999999999998,26.350000000000001,25.899999999999999,25.420000000000002,24.370000000000001,24.760000000000002,25.91,25.949999999999999,26.109999999999999,25.98],"text":["month: Jan<br />temp: 25.97<br />YEAR: 2017","month: Feb<br />temp: 25.84<br />YEAR: 2017","month: Mar<br />temp: 26.33<br />YEAR: 2017","month: Apr<br />temp: 26.35<br />YEAR: 2017","month: May<br />temp: 25.90<br />YEAR: 2017","month: Jun<br />temp: 25.42<br />YEAR: 2017","month: Jul<br />temp: 24.37<br />YEAR: 2017","month: Aug<br />temp: 24.76<br />YEAR: 2017","month: Sep<br />temp: 25.91<br />YEAR: 2017","month: Oct<br />temp: 25.95<br />YEAR: 2017","month: Nov<br />temp: 26.11<br />YEAR: 2017","month: Dec<br />temp: 25.98<br />YEAR: 2017"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.920000000000002,25.77,26.300000000000001,26.800000000000001,25.91,25.27,24.059999999999999,24.789999999999999,26.079999999999998,26.800000000000001,26.5,26.079999999999998],"text":["month: Jan<br />temp: 25.92<br />YEAR: 2018","month: Feb<br />temp: 25.77<br />YEAR: 2018","month: Mar<br />temp: 26.30<br />YEAR: 2018","month: Apr<br />temp: 26.80<br />YEAR: 2018","month: May<br />temp: 25.91<br />YEAR: 2018","month: Jun<br />temp: 25.27<br />YEAR: 2018","month: Jul<br />temp: 24.06<br />YEAR: 2018","month: Aug<br />temp: 24.79<br />YEAR: 2018","month: Sep<br />temp: 26.08<br />YEAR: 2018","month: Oct<br />temp: 26.80<br />YEAR: 2018","month: Nov<br />temp: 26.50<br />YEAR: 2018","month: Dec<br />temp: 26.08<br />YEAR: 2018"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x3","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[26.57,26.629999999999999,26.149999999999999,26.82,25.859999999999999,24.43,24.309999999999999,24.760000000000002,25.52,26.800000000000001,27.620000000000001,27.460000000000001],"text":["month: Jan<br />temp: 26.57<br />YEAR: 2019","month: Feb<br />temp: 26.63<br />YEAR: 2019","month: Mar<br />temp: 26.15<br />YEAR: 2019","month: Apr<br />temp: 26.82<br />YEAR: 2019","month: May<br />temp: 25.86<br />YEAR: 2019","month: Jun<br />temp: 24.43<br />YEAR: 2019","month: Jul<br />temp: 24.31<br />YEAR: 2019","month: Aug<br />temp: 24.76<br />YEAR: 2019","month: Sep<br />temp: 25.52<br />YEAR: 2019","month: Oct<br />temp: 26.80<br />YEAR: 2019","month: Nov<br />temp: 27.62<br />YEAR: 2019","month: Dec<br />temp: 27.46<br />YEAR: 2019"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x4","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[26.859999999999999,26.719999999999999,26.920000000000002,27.219999999999999,26.77,25.780000000000001,24.719999999999999,25.039999999999999,25.960000000000001,26.149999999999999,26.559999999999999,25.789999999999999],"text":["month: Jan<br />temp: 26.86<br />YEAR: 2020","month: Feb<br />temp: 26.72<br />YEAR: 2020","month: Mar<br />temp: 26.92<br />YEAR: 2020","month: Apr<br />temp: 27.22<br />YEAR: 2020","month: May<br />temp: 26.77<br />YEAR: 2020","month: Jun<br />temp: 25.78<br />YEAR: 2020","month: Jul<br />temp: 24.72<br />YEAR: 2020","month: Aug<br />temp: 25.04<br />YEAR: 2020","month: Sep<br />temp: 25.96<br />YEAR: 2020","month: Oct<br />temp: 26.15<br />YEAR: 2020","month: Nov<br />temp: 26.56<br />YEAR: 2020","month: Dec<br />temp: 25.79<br />YEAR: 2020"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(27,158,119,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x5","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.649999999999999,25.760000000000002,25.690000000000001,25.780000000000001,25.699999999999999,24.359999999999999,23.98,24.09,24.84,26.25,26.140000000000001,26.23],"text":["month: Jan<br />temp: 25.65","month: Feb<br />temp: 25.76","month: Mar<br />temp: 25.69","month: Apr<br />temp: 25.78","month: May<br />temp: 25.70","month: Jun<br />temp: 24.36","month: Jul<br />temp: 23.98","month: Aug<br />temp: 24.09","month: Sep<br />temp: 24.84","month: Oct<br />temp: 26.25","month: Nov<br />temp: 26.14","month: Dec<br />temp: 26.23"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.690000000000001,25.989999999999998,25.68,26.07,25.620000000000001,24.449999999999999,23.780000000000001,24.370000000000001,25.710000000000001,26.489999999999998,26.629999999999999,26.109999999999999],"text":["month: Jan<br />temp: 25.69","month: Feb<br />temp: 25.99","month: Mar<br />temp: 25.68","month: Apr<br />temp: 26.07","month: May<br />temp: 25.62","month: Jun<br />temp: 24.45","month: Jul<br />temp: 23.78","month: Aug<br />temp: 24.37","month: Sep<br />temp: 25.71","month: Oct<br />temp: 26.49","month: Nov<br />temp: 26.63","month: Dec<br />temp: 26.11"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.800000000000001,26.559999999999999,26.379999999999999,26.550000000000001,26.379999999999999,26.039999999999999,24.890000000000001,24.129999999999999,24.530000000000001,26.239999999999998,26.23,25.760000000000002],"text":["month: Jan<br />temp: 25.80","month: Feb<br />temp: 26.56","month: Mar<br />temp: 26.38","month: Apr<br />temp: 26.55","month: May<br />temp: 26.38","month: Jun<br />temp: 26.04","month: Jul<br />temp: 24.89","month: Aug<br />temp: 24.13","month: Sep<br />temp: 24.53","month: Oct<br />temp: 26.24","month: Nov<br />temp: 26.23","month: Dec<br />temp: 25.76"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x3","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.469999999999999,25.969999999999999,26.719999999999999,26.690000000000001,26.829999999999998,26.02,24.800000000000001,24.52,25.039999999999999,26.780000000000001,26.73,25.98],"text":["month: Jan<br />temp: 25.47","month: Feb<br />temp: 25.97","month: Mar<br />temp: 26.72","month: Apr<br />temp: 26.69","month: May<br />temp: 26.83","month: Jun<br />temp: 26.02","month: Jul<br />temp: 24.80","month: Aug<br />temp: 24.52","month: Sep<br />temp: 25.04","month: Oct<br />temp: 26.78","month: Nov<br />temp: 26.73","month: Dec<br />temp: 25.98"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x4","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.629999999999999,26.07,26.18,26.32,25.699999999999999,24.82,24.440000000000001,24.870000000000001,25.649999999999999,27.239999999999998,27.190000000000001,26.649999999999999],"text":["month: Jan<br />temp: 25.63","month: Feb<br />temp: 26.07","month: Mar<br />temp: 26.18","month: Apr<br />temp: 26.32","month: May<br />temp: 25.70","month: Jun<br />temp: 24.82","month: Jul<br />temp: 24.44","month: Aug<br />temp: 24.87","month: Sep<br />temp: 25.65","month: Oct<br />temp: 27.24","month: Nov<br />temp: 27.19","month: Dec<br />temp: 26.65"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x5","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[27.129999999999999,26.460000000000001,27.23,27.239999999999998,27.079999999999998,26.329999999999998,26.079999999999998,25.640000000000001,26.149999999999999,26.210000000000001,26.260000000000002,25.859999999999999],"text":["month: Jan<br />temp: 27.13","month: Feb<br />temp: 26.46","month: Mar<br />temp: 27.23","month: Apr<br />temp: 27.24","month: May<br />temp: 27.08","month: Jun<br />temp: 26.33","month: Jul<br />temp: 26.08","month: Aug<br />temp: 25.64","month: Sep<br />temp: 26.15","month: Oct<br />temp: 26.21","month: Nov<br />temp: 26.26","month: Dec<br />temp: 25.86"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.969999999999999,25.84,26.329999999999998,26.350000000000001,25.899999999999999,25.420000000000002,24.370000000000001,24.760000000000002,25.91,25.949999999999999,26.109999999999999,25.98],"text":["month: Jan<br />temp: 25.97","month: Feb<br />temp: 25.84","month: Mar<br />temp: 26.33","month: Apr<br />temp: 26.35","month: May<br />temp: 25.90","month: Jun<br />temp: 25.42","month: Jul<br />temp: 24.37","month: Aug<br />temp: 24.76","month: Sep<br />temp: 25.91","month: Oct<br />temp: 25.95","month: Nov<br />temp: 26.11","month: Dec<br />temp: 25.98"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x2","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[25.920000000000002,25.77,26.300000000000001,26.800000000000001,25.91,25.27,24.059999999999999,24.789999999999999,26.079999999999998,26.800000000000001,26.5,26.079999999999998],"text":["month: Jan<br />temp: 25.92","month: Feb<br />temp: 25.77","month: Mar<br />temp: 26.30","month: Apr<br />temp: 26.80","month: May<br />temp: 25.91","month: Jun<br />temp: 25.27","month: Jul<br />temp: 24.06","month: Aug<br />temp: 24.79","month: Sep<br />temp: 26.08","month: Oct<br />temp: 26.80","month: Nov<br />temp: 26.50","month: Dec<br />temp: 26.08"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x3","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[26.57,26.629999999999999,26.149999999999999,26.82,25.859999999999999,24.43,24.309999999999999,24.760000000000002,25.52,26.800000000000001,27.620000000000001,27.460000000000001],"text":["month: Jan<br />temp: 26.57","month: Feb<br />temp: 26.63","month: Mar<br />temp: 26.15","month: Apr<br />temp: 26.82","month: May<br />temp: 25.86","month: Jun<br />temp: 24.43","month: Jul<br />temp: 24.31","month: Aug<br />temp: 24.76","month: Sep<br />temp: 25.52","month: Oct<br />temp: 26.80","month: Nov<br />temp: 27.62","month: Dec<br />temp: 27.46"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x4","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[26.859999999999999,26.719999999999999,26.920000000000002,27.219999999999999,26.77,25.780000000000001,24.719999999999999,25.039999999999999,25.960000000000001,26.149999999999999,26.559999999999999,25.789999999999999],"text":["month: Jan<br />temp: 26.86","month: Feb<br />temp: 26.72","month: Mar<br />temp: 26.92","month: Apr<br />temp: 27.22","month: May<br />temp: 26.77","month: Jun<br />temp: 25.78","month: Jul<br />temp: 24.72","month: Aug<br />temp: 25.04","month: Sep<br />temp: 25.96","month: Oct<br />temp: 26.15","month: Nov<br />temp: 26.56","month: Dec<br />temp: 25.79"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","opacity":1,"size":3.7795275590551185,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(217,95,2,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x5","yaxis":"y2","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":58.212075088787429,"r":7.3059360730593621,"b":34.175545408422138,"l":37.260273972602747},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Average Monthly Temperature in Yogyakarta (2011–2020)","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342468},"x":0,"xref":"paper"},"xaxis":{"domain":[0,0.19592302674494455],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,12.6],"tickmode":"array","ticktext":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"tickvals":[1,2,3,4.0000000000000009,5,6,7.0000000000000009,8,9,10,11,12],"categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis":{"domain":[0.51884467637892295,1],"automargin":true,"type":"linear","autorange":false,"range":[22.75,28.25],"tickmode":"array","ticktext":["24","25","26","27","28"],"tickvals":[24,25,26,27,28],"categoryorder":"array","categoryarray":["24","25","26","27","28"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"annotations":[{"text":"Average Temperature (°C)","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-21.917808219178081},{"text":"2011","x":0.097961513372472275,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"2012","x":0.30000000000000004,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"2013","x":0.50000000000000011,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"2014","x":0.70000000000000007,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"2015","x":0.90203848662752772,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"2016","x":0.097961513372472275,"y":0.48115532362107705,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"2017","x":0.30000000000000004,"y":0.48115532362107705,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"2018","x":0.50000000000000011,"y":0.48115532362107705,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"2019","x":0.70000000000000007,"y":0.48115532362107705,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"2020","x":0.90203848662752772,"y":0.48115532362107705,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716894984},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.19592302674494455,"y0":0.51884467637892295,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.19592302674494455,"y0":0,"y1":23.37899543378996,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.20407697325505547,"x1":0.39592302674494456,"y0":0.51884467637892295,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.20407697325505547,"x1":0.39592302674494456,"y0":0,"y1":23.37899543378996,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.40407697325505548,"x1":0.59592302674494468,"y0":0.51884467637892295,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.40407697325505548,"x1":0.59592302674494468,"y0":0,"y1":23.37899543378996,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.60407697325505549,"x1":0.79592302674494464,"y0":0.51884467637892295,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.60407697325505549,"x1":0.79592302674494464,"y0":0,"y1":23.37899543378996,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.80407697325505545,"x1":1,"y0":0.51884467637892295,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.80407697325505545,"x1":1,"y0":0,"y1":23.37899543378996,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.19592302674494455,"y0":0,"y1":0.48115532362107705},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":0.19592302674494455,"y0":0,"y1":23.37899543378996,"yanchor":0.48115532362107705,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.20407697325505547,"x1":0.39592302674494456,"y0":0,"y1":0.48115532362107705},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.20407697325505547,"x1":0.39592302674494456,"y0":0,"y1":23.37899543378996,"yanchor":0.48115532362107705,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.40407697325505548,"x1":0.59592302674494468,"y0":0,"y1":0.48115532362107705},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.40407697325505548,"x1":0.59592302674494468,"y0":0,"y1":23.37899543378996,"yanchor":0.48115532362107705,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.60407697325505549,"x1":0.79592302674494464,"y0":0,"y1":0.48115532362107705},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.60407697325505549,"x1":0.79592302674494464,"y0":0,"y1":23.37899543378996,"yanchor":0.48115532362107705,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.80407697325505545,"x1":1,"y0":0,"y1":0.48115532362107705},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0.80407697325505545,"x1":1,"y0":0,"y1":23.37899543378996,"yanchor":0.48115532362107705,"ysizemode":"pixel"}],"xaxis2":{"type":"linear","autorange":false,"range":[0.40000000000000002,12.6],"tickmode":"array","ticktext":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"tickvals":[1,2,3,4.0000000000000009,5,6,7.0000000000000009,8,9,10,11,12],"categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.20407697325505547,0.39592302674494456],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"xaxis3":{"type":"linear","autorange":false,"range":[0.40000000000000002,12.6],"tickmode":"array","ticktext":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"tickvals":[1,2,3,4.0000000000000009,5,6,7.0000000000000009,8,9,10,11,12],"categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.40407697325505548,0.59592302674494468],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"xaxis4":{"type":"linear","autorange":false,"range":[0.40000000000000002,12.6],"tickmode":"array","ticktext":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"tickvals":[1,2,3,4.0000000000000009,5,6,7.0000000000000009,8,9,10,11,12],"categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.60407697325505549,0.79592302674494464],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"xaxis5":{"type":"linear","autorange":false,"range":[0.40000000000000002,12.6],"tickmode":"array","ticktext":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"tickvals":[1,2,3,4.0000000000000009,5,6,7.0000000000000009,8,9,10,11,12],"categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.80407697325505545,1],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y2","title":"","hoverformat":".2f"},"yaxis2":{"type":"linear","autorange":false,"range":[22.75,28.25],"tickmode":"array","ticktext":["24","25","26","27","28"],"tickvals":[24,25,26,27,28],"categoryorder":"array","categoryarray":["24","25","26","27","28"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.48115532362107705],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716894984}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"18447a3714d8":{"x":{},"y":{},"type":"scatter"},"1844625e1a7e":{"x":{},"y":{}}},"cur_data":"18447a3714d8","visdat":{"18447a3714d8":["function (y) ","x"],"1844625e1a7e":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-temp-yog-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Understanding Yogyakarta’s temperature trends (2011–2020)
+</figcaption>
+</figure>
+</div>
+</div>
+<p>What do you notice? What do you wonder?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpreting and Redesigning Data Representations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>What is the main message or insight about Yogyakarta’s average monthly temperature (2011–2020) as shown in <a href="#fig-temp-yog" class="quarto-xref">Figure&nbsp;1</a>?</p></li>
+<li><p>Do you think the diagram effectively communicates this message? What could be improved?</p></li>
+<li><p>How would you redesign this diagram to convey the same message more clearly or engagingly? Why?</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Are You Ready for More?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><a href="#fig-heatmap-yog-temp" class="quarto-xref">Figure&nbsp;2</a> is a visual representation provided by your friend Alex as an alternative to convey the same message about Yogyakarta’s average monthly temperature (2011–2020).</p>
+<div class="cell">
+<div id="fig-heatmap-yog-temp" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-heatmap-yog-temp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-9929992c2354ff2a9738" style="width:100%;height:365px;"></div>
+<script type="application/json" data-for="htmlwidget-9929992c2354ff2a9738">{"x":{"data":[{"x":[2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"y":[1,2,3,4,5,6,7,8,9,10,11,12],"z":[[0.48697916666666602,0.49739583333333337,0.52604166666666663,0.44010416666666607,0.48177083333333282,0.87239583333333282,0.57031249999999944,0.55729166666666685,0.72656249999999978,0.80208333333333293],[0.51562500000000011,0.5755208333333327,0.7239583333333327,0.57031249999999944,0.59635416666666652,0.69791666666666663,0.53645833333333304,0.5182291666666663,0.74218749999999944,0.76562499999999944],[0.49739583333333337,0.4947916666666663,0.67708333333333282,0.76562499999999944,0.62499999999999967,0.89843749999999989,0.66406249999999933,0.65624999999999989,0.61718749999999933,0.81770833333333348],[0.52083333333333337,0.59635416666666652,0.72135416666666663,0.75781250000000011,0.66145833333333315,0.90104166666666596,0.66927083333333348,0.78645833333333326,0.79166666666666652,0.89583333333333282],[0.49999999999999956,0.47916666666666663,0.67708333333333282,0.79427083333333259,0.49999999999999956,0.85937499999999933,0.5520833333333327,0.55468749999999978,0.5416666666666663,0.77864583333333293],[0.15104166666666624,0.17447916666666619,0.58854166666666619,0.58333333333333293,0.27083333333333315,0.66406249999999933,0.42708333333333348,0.38802083333333293,0.16927083333333298,0.52083333333333337],[0.052083333333333148,0,0.28906249999999989,0.26562499999999989,0.17187500000000006,0.59895833333333259,0.15364583333333331,0.072916666666666047,0.1380208333333327,0.24479166666666607],[0.080729166666666338,0.15364583333333331,0.091145833333332787,0.19270833333333293,0.28385416666666663,0.48437499999999989,0.25520833333333348,0.26302083333333282,0.25520833333333348,0.3281249999999995],[0.27604166666666635,0.50260416666666663,0.1953125,0.3281249999999995,0.48697916666666602,0.61718749999999933,0.55468749999999978,0.59895833333333259,0.45312499999999961,0.56770833333333326],[0.64322916666666641,0.70572916666666596,0.64062499999999933,0.78125,0.90104166666666596,0.6328125,0.56510416666666619,0.78645833333333326,0.78645833333333326,0.61718749999999933],[0.61458333333333326,0.74218749999999944,0.63802083333333315,0.76822916666666652,0.88802083333333337,0.64583333333333348,0.60677083333333293,0.70833333333333304,1,0.7239583333333327],[0.63802083333333315,0.60677083333333293,0.51562500000000011,0.57291666666666652,0.7473958333333327,0.5416666666666663,0.57291666666666652,0.59895833333333259,0.95833333333333326,0.52343749999999956]],"text":[["year: 2011<br />month: Jan<br />temp: 25.65","year: 2012<br />month: Jan<br />temp: 25.69","year: 2013<br />month: Jan<br />temp: 25.80","year: 2014<br />month: Jan<br />temp: 25.47","year: 2015<br />month: Jan<br />temp: 25.63","year: 2016<br />month: Jan<br />temp: 27.13","year: 2017<br />month: Jan<br />temp: 25.97","year: 2018<br />month: Jan<br />temp: 25.92","year: 2019<br />month: Jan<br />temp: 26.57","year: 2020<br />month: Jan<br />temp: 26.86"],["year: 2011<br />month: Feb<br />temp: 25.76","year: 2012<br />month: Feb<br />temp: 25.99","year: 2013<br />month: Feb<br />temp: 26.56","year: 2014<br />month: Feb<br />temp: 25.97","year: 2015<br />month: Feb<br />temp: 26.07","year: 2016<br />month: Feb<br />temp: 26.46","year: 2017<br />month: Feb<br />temp: 25.84","year: 2018<br />month: Feb<br />temp: 25.77","year: 2019<br />month: Feb<br />temp: 26.63","year: 2020<br />month: Feb<br />temp: 26.72"],["year: 2011<br />month: Mar<br />temp: 25.69","year: 2012<br />month: Mar<br />temp: 25.68","year: 2013<br />month: Mar<br />temp: 26.38","year: 2014<br />month: Mar<br />temp: 26.72","year: 2015<br />month: Mar<br />temp: 26.18","year: 2016<br />month: Mar<br />temp: 27.23","year: 2017<br />month: Mar<br />temp: 26.33","year: 2018<br />month: Mar<br />temp: 26.30","year: 2019<br />month: Mar<br />temp: 26.15","year: 2020<br />month: Mar<br />temp: 26.92"],["year: 2011<br />month: Apr<br />temp: 25.78","year: 2012<br />month: Apr<br />temp: 26.07","year: 2013<br />month: Apr<br />temp: 26.55","year: 2014<br />month: Apr<br />temp: 26.69","year: 2015<br />month: Apr<br />temp: 26.32","year: 2016<br />month: Apr<br />temp: 27.24","year: 2017<br />month: Apr<br />temp: 26.35","year: 2018<br />month: Apr<br />temp: 26.80","year: 2019<br />month: Apr<br />temp: 26.82","year: 2020<br />month: Apr<br />temp: 27.22"],["year: 2011<br />month: May<br />temp: 25.70","year: 2012<br />month: May<br />temp: 25.62","year: 2013<br />month: May<br />temp: 26.38","year: 2014<br />month: May<br />temp: 26.83","year: 2015<br />month: May<br />temp: 25.70","year: 2016<br />month: May<br />temp: 27.08","year: 2017<br />month: May<br />temp: 25.90","year: 2018<br />month: May<br />temp: 25.91","year: 2019<br />month: May<br />temp: 25.86","year: 2020<br />month: May<br />temp: 26.77"],["year: 2011<br />month: Jun<br />temp: 24.36","year: 2012<br />month: Jun<br />temp: 24.45","year: 2013<br />month: Jun<br />temp: 26.04","year: 2014<br />month: Jun<br />temp: 26.02","year: 2015<br />month: Jun<br />temp: 24.82","year: 2016<br />month: Jun<br />temp: 26.33","year: 2017<br />month: Jun<br />temp: 25.42","year: 2018<br />month: Jun<br />temp: 25.27","year: 2019<br />month: Jun<br />temp: 24.43","year: 2020<br />month: Jun<br />temp: 25.78"],["year: 2011<br />month: Jul<br />temp: 23.98","year: 2012<br />month: Jul<br />temp: 23.78","year: 2013<br />month: Jul<br />temp: 24.89","year: 2014<br />month: Jul<br />temp: 24.80","year: 2015<br />month: Jul<br />temp: 24.44","year: 2016<br />month: Jul<br />temp: 26.08","year: 2017<br />month: Jul<br />temp: 24.37","year: 2018<br />month: Jul<br />temp: 24.06","year: 2019<br />month: Jul<br />temp: 24.31","year: 2020<br />month: Jul<br />temp: 24.72"],["year: 2011<br />month: Aug<br />temp: 24.09","year: 2012<br />month: Aug<br />temp: 24.37","year: 2013<br />month: Aug<br />temp: 24.13","year: 2014<br />month: Aug<br />temp: 24.52","year: 2015<br />month: Aug<br />temp: 24.87","year: 2016<br />month: Aug<br />temp: 25.64","year: 2017<br />month: Aug<br />temp: 24.76","year: 2018<br />month: Aug<br />temp: 24.79","year: 2019<br />month: Aug<br />temp: 24.76","year: 2020<br />month: Aug<br />temp: 25.04"],["year: 2011<br />month: Sep<br />temp: 24.84","year: 2012<br />month: Sep<br />temp: 25.71","year: 2013<br />month: Sep<br />temp: 24.53","year: 2014<br />month: Sep<br />temp: 25.04","year: 2015<br />month: Sep<br />temp: 25.65","year: 2016<br />month: Sep<br />temp: 26.15","year: 2017<br />month: Sep<br />temp: 25.91","year: 2018<br />month: Sep<br />temp: 26.08","year: 2019<br />month: Sep<br />temp: 25.52","year: 2020<br />month: Sep<br />temp: 25.96"],["year: 2011<br />month: Oct<br />temp: 26.25","year: 2012<br />month: Oct<br />temp: 26.49","year: 2013<br />month: Oct<br />temp: 26.24","year: 2014<br />month: Oct<br />temp: 26.78","year: 2015<br />month: Oct<br />temp: 27.24","year: 2016<br />month: Oct<br />temp: 26.21","year: 2017<br />month: Oct<br />temp: 25.95","year: 2018<br />month: Oct<br />temp: 26.80","year: 2019<br />month: Oct<br />temp: 26.80","year: 2020<br />month: Oct<br />temp: 26.15"],["year: 2011<br />month: Nov<br />temp: 26.14","year: 2012<br />month: Nov<br />temp: 26.63","year: 2013<br />month: Nov<br />temp: 26.23","year: 2014<br />month: Nov<br />temp: 26.73","year: 2015<br />month: Nov<br />temp: 27.19","year: 2016<br />month: Nov<br />temp: 26.26","year: 2017<br />month: Nov<br />temp: 26.11","year: 2018<br />month: Nov<br />temp: 26.50","year: 2019<br />month: Nov<br />temp: 27.62","year: 2020<br />month: Nov<br />temp: 26.56"],["year: 2011<br />month: Dec<br />temp: 26.23","year: 2012<br />month: Dec<br />temp: 26.11","year: 2013<br />month: Dec<br />temp: 25.76","year: 2014<br />month: Dec<br />temp: 25.98","year: 2015<br />month: Dec<br />temp: 26.65","year: 2016<br />month: Dec<br />temp: 25.86","year: 2017<br />month: Dec<br />temp: 25.98","year: 2018<br />month: Dec<br />temp: 26.08","year: 2019<br />month: Dec<br />temp: 27.46","year: 2020<br />month: Dec<br />temp: 25.79"]],"colorscale":[[0,"#440154"],[0.052083333333333148,"#451961"],[0.072916666666666047,"#462066"],[0.080729166666666338,"#462268"],[0.091145833333332787,"#46256B"],[0.1380208333333327,"#453377"],[0.15104166666666624,"#44377A"],[0.15364583333333331,"#44377B"],[0.16927083333333298,"#433C7F"],[0.17187500000000006,"#433C80"],[0.17447916666666619,"#433D80"],[0.19270833333333293,"#424285"],[0.1953125,"#414386"],[0.24479166666666607,"#3F5089"],[0.25520833333333348,"#3E5389"],[0.26302083333333282,"#3E5589"],[0.26562499999999989,"#3E5589"],[0.27083333333333315,"#3D578A"],[0.27604166666666635,"#3D588A"],[0.28385416666666663,"#3C5A8A"],[0.28906249999999989,"#3C5C8A"],[0.3281249999999995,"#38668C"],[0.38802083333333293,"#2D758E"],[0.42708333333333348,"#2B7E8D"],[0.44010416666666607,"#2B818C"],[0.45312499999999961,"#2C858C"],[0.47916666666666663,"#2C8B8A"],[0.48177083333333282,"#2B8B8A"],[0.48437499999999989,"#2B8C8A"],[0.48697916666666602,"#2B8D8A"],[0.4947916666666663,"#2B8E8A"],[0.49739583333333337,"#2B8F8A"],[0.49999999999999956,"#2B9089"],[0.50260416666666663,"#2B9089"],[0.51562500000000011,"#2A9389"],[0.5182291666666663,"#2A9489"],[0.52083333333333337,"#2A9588"],[0.52343749999999956,"#2A9588"],[0.52604166666666663,"#2A9688"],[0.53645833333333304,"#299988"],[0.5416666666666663,"#299A87"],[0.5520833333333327,"#289C87"],[0.55468749999999978,"#289D87"],[0.55729166666666685,"#279E86"],[0.56510416666666619,"#279F86"],[0.56770833333333326,"#26A086"],[0.57031249999999944,"#26A186"],[0.57291666666666652,"#26A186"],[0.5755208333333327,"#26A285"],[0.58333333333333293,"#25A485"],[0.58854166666666619,"#24A585"],[0.59635416666666652,"#23A784"],[0.59895833333333259,"#22A884"],[0.60677083333333293,"#28A983"],[0.61458333333333326,"#2FAB81"],[0.61718749999999933,"#31AB80"],[0.62499999999999967,"#36AD7F"],[0.6328125,"#3BAF7D"],[0.63802083333333315,"#3EB07C"],[0.64062499999999933,"#3FB07B"],[0.64322916666666641,"#41B17A"],[0.64583333333333348,"#42B17A"],[0.65624999999999989,"#47B377"],[0.66145833333333315,"#4AB476"],[0.66406249999999933,"#4BB576"],[0.66927083333333348,"#4DB674"],[0.67708333333333282,"#51B773"],[0.69791666666666663,"#59BC6E"],[0.70572916666666596,"#5CBD6C"],[0.70833333333333304,"#5DBE6B"],[0.72135416666666663,"#61C168"],[0.7239583333333327,"#62C167"],[0.72656249999999978,"#63C266"],[0.74218749999999944,"#68C562"],[0.7473958333333327,"#6AC661"],[0.75781250000000011,"#6DC85E"],[0.76562499999999944,"#70CA5C"],[0.76822916666666652,"#71CA5B"],[0.77864583333333293,"#74CD58"],[0.78125,"#75CD57"],[0.78645833333333326,"#76CE55"],[0.79166666666666652,"#78CF54"],[0.79427083333333259,"#78D053"],[0.80208333333333293,"#7CD151"],[0.81770833333333348,"#88D34E"],[0.85937499999999933,"#A6D847"],[0.87239583333333282,"#AEDA45"],[0.88802083333333337,"#B9DC42"],[0.89583333333333282,"#BEDC41"],[0.89843749999999989,"#BFDD40"],[0.90104166666666596,"#C1DD3F"],[0.95833333333333326,"#E4E332"],[1,"#FDE725"]],"type":"heatmap","showscale":false,"autocolorscale":false,"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2011],"y":[1],"name":"964ff956181bc1bf09668ce158d21671","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#440154"],[0.0033444816053514645,"#440355"],[0.0066889632107020036,"#440456"],[0.010033444816053469,"#440656"],[0.013377926421404934,"#450857"],[0.016722408026755474,"#450958"],[0.020066889632106937,"#450B59"],[0.0234113712374584,"#450D5A"],[0.026755852842808941,"#450E5B"],[0.030100334448160404,"#45105B"],[0.033444816053511871,"#45115C"],[0.036789297658862408,"#45135D"],[0.040133779264213874,"#45145E"],[0.043478260869565341,"#45155F"],[0.046822742474916801,"#451760"],[0.050167224080267345,"#451860"],[0.053511705685618804,"#451961"],[0.056856187290970271,"#461A62"],[0.060200668896320808,"#461B63"],[0.063545150501672282,"#461D64"],[0.066889632107023742,"#461E65"],[0.070234113712374285,"#461F65"],[0.073578595317725745,"#462066"],[0.076923076923077205,"#462167"],[0.080267558528427749,"#462268"],[0.083612040133779209,"#462369"],[0.086956521739130682,"#46246A"],[0.090301003344481212,"#46256B"],[0.093645484949832686,"#46266B"],[0.096989966555184146,"#46276C"],[0.10033444816053469,"#46286D"],[0.10367892976588615,"#46296E"],[0.10702341137123761,"#462A6F"],[0.11036789297658908,"#452B70"],[0.11371237458193961,"#452C70"],[0.11705685618729109,"#452D71"],[0.12040133779264255,"#452E72"],[0.12374581939799309,"#452F73"],[0.12709030100334456,"#453074"],[0.13043478260869601,"#453175"],[0.13377926421404657,"#453276"],[0.13712374581939801,"#453377"],[0.14046822742474949,"#453477"],[0.14381270903010002,"#443578"],[0.14715719063545149,"#443679"],[0.15050167224080296,"#44367A"],[0.15384615384615349,"#44377B"],[0.15719063545150497,"#44387C"],[0.16053511705685641,"#44397D"],[0.16387959866220697,"#443A7D"],[0.16722408026755842,"#433B7E"],[0.17056856187290989,"#433C7F"],[0.17391304347826042,"#433D80"],[0.17725752508361189,"#433E81"],[0.18060200668896337,"#433F82"],[0.18394648829431481,"#424083"],[0.18729096989966537,"#424184"],[0.19063545150501682,"#424185"],[0.19397993311036829,"#424285"],[0.19732441471571882,"#414386"],[0.20066889632107029,"#414487"],[0.20401337792642177,"#414587"],[0.2073578595317723,"#414687"],[0.21070234113712377,"#414787"],[0.21404682274247522,"#414888"],[0.21739130434782578,"#404988"],[0.22073578595317722,"#404A88"],[0.2240802675585287,"#404A88"],[0.22742474916387923,"#404B88"],[0.2307692307692307,"#404C88"],[0.23411371237458217,"#404D88"],[0.2374581939799327,"#404E88"],[0.24080267558528418,"#3F4F89"],[0.24414715719063562,"#3F5089"],[0.24749163879598618,"#3F5189"],[0.25083612040133763,"#3F5289"],[0.25418060200668913,"#3F5289"],[0.25752508361204057,"#3E5389"],[0.26086956521739113,"#3E5489"],[0.26421404682274258,"#3E5589"],[0.26755852842809402,"#3E568A"],[0.27090301003344458,"#3D578A"],[0.27424749163879603,"#3D588A"],[0.27759197324414753,"#3D598A"],[0.28093645484949803,"#3D598A"],[0.28428093645484953,"#3C5A8A"],[0.28762541806020098,"#3C5B8A"],[0.29096989966555153,"#3C5C8A"],[0.29431438127090298,"#3B5D8A"],[0.29765886287625443,"#3B5E8B"],[0.30100334448160498,"#3B5F8B"],[0.30434782608695643,"#3A5F8B"],[0.30769230769230793,"#3A608B"],[0.31103678929765843,"#3A618B"],[0.31438127090300994,"#39628B"],[0.31772575250836138,"#39638B"],[0.32107023411371283,"#38648B"],[0.32441471571906338,"#38658C"],[0.32775919732441483,"#38658C"],[0.33110367892976539,"#37668C"],[0.33444816053511683,"#37678C"],[0.33779264214046834,"#36688C"],[0.34113712374581978,"#36698C"],[0.34448160535117034,"#356A8C"],[0.34782608695652178,"#356B8C"],[0.35117056856187323,"#346B8C"],[0.35451505016722379,"#346C8D"],[0.35785953177257523,"#336D8D"],[0.36120401337792674,"#326E8D"],[0.36454849498327724,"#326F8D"],[0.36789297658862874,"#31708D"],[0.37123745819398019,"#31718D"],[0.37458193979933074,"#30718D"],[0.37792642140468219,"#2F728D"],[0.38127090301003363,"#2F738D"],[0.38461538461538419,"#2E748E"],[0.38795986622073564,"#2D758E"],[0.39130434782608714,"#2C768E"],[0.39464882943143764,"#2B778E"],[0.39799331103678914,"#2B778E"],[0.40133779264214059,"#2A788E"],[0.40468227424749204,"#2A798E"],[0.40802675585284259,"#2A7A8E"],[0.41137123745819404,"#2B7B8E"],[0.41471571906354554,"#2B7B8D"],[0.41806020066889604,"#2B7C8D"],[0.42140468227424754,"#2B7D8D"],[0.42474916387959899,"#2B7E8D"],[0.42809364548494955,"#2B7F8D"],[0.43143812709030099,"#2B7F8D"],[0.43478260869565244,"#2B808D"],[0.438127090301003,"#2B818C"],[0.44147157190635444,"#2B828C"],[0.44481605351170594,"#2B838C"],[0.44816053511705645,"#2C838C"],[0.45150501672240795,"#2C848C"],[0.45484949832775939,"#2C858C"],[0.45819397993310995,"#2C868B"],[0.4615384615384614,"#2C878B"],[0.46488294314381284,"#2C878B"],[0.46822742474916434,"#2C888B"],[0.47157190635451485,"#2C898B"],[0.47491638795986635,"#2C8A8B"],[0.47826086956521779,"#2C8B8B"],[0.48160535117056835,"#2B8B8A"],[0.4849498327759198,"#2B8C8A"],[0.48829431438127124,"#2B8D8A"],[0.4916387959866218,"#2B8E8A"],[0.49498327759197325,"#2B8F8A"],[0.49832775919732475,"#2B8F8A"],[0.50167224080267525,"#2B9089"],[0.50501672240802675,"#2B9189"],[0.50836120401337825,"#2B9289"],[0.51170568561872876,"#2B9389"],[0.51505016722408026,"#2A9389"],[0.51839464882943165,"#2A9489"],[0.52173913043478226,"#2A9588"],[0.52508361204013365,"#2A9688"],[0.52842809364548515,"#2A9788"],[0.53177257525083665,"#2A9788"],[0.53511705685618716,"#299888"],[0.53846153846153866,"#299987"],[0.54180602006688916,"#299A87"],[0.54515050167224066,"#299B87"],[0.54849498327759205,"#289B87"],[0.55183946488294355,"#289C87"],[0.55518394648829406,"#289D87"],[0.55852842809364556,"#279E86"],[0.56187290969899706,"#279F86"],[0.56521739130434756,"#27A086"],[0.56856187290969906,"#26A086"],[0.57190635451505045,"#26A186"],[0.57525083612040107,"#26A285"],[0.57859531772575246,"#25A385"],[0.58193979933110396,"#25A485"],[0.58528428093645446,"#24A485"],[0.58862876254180596,"#24A585"],[0.59197324414715746,"#23A684"],[0.59531772575250796,"#23A784"],[0.59866220735785947,"#22A884"],[0.60200668896321086,"#24A884"],[0.60535117056856147,"#27A983"],[0.60869565217391286,"#2AAA82"],[0.61204013377926436,"#2DAA81"],[0.61538461538461586,"#2FAB81"],[0.61872909698996637,"#32AC80"],[0.62207357859531787,"#34AC7F"],[0.62541806020066837,"#36AD7E"],[0.62876254180601987,"#38AE7E"],[0.63210702341137126,"#3AAE7D"],[0.63545150501672276,"#3CAF7C"],[0.63879598662207326,"#3EB07B"],[0.64214046822742477,"#40B07B"],[0.64548494983277627,"#42B17A"],[0.64882943143812677,"#43B279"],[0.65217391304347827,"#45B278"],[0.65551839464882966,"#47B378"],[0.65886287625418027,"#48B477"],[0.66220735785953166,"#4AB476"],[0.66555183946488317,"#4BB575"],[0.66889632107023367,"#4DB675"],[0.67224080267558517,"#4EB674"],[0.67558528428093667,"#50B773"],[0.67892976588628806,"#51B872"],[0.68227424749163867,"#53B971"],[0.68561872909699006,"#54B971"],[0.68896321070234068,"#55BA70"],[0.69230769230769207,"#57BB6F"],[0.69565217391304357,"#58BB6E"],[0.69899665551839507,"#59BC6D"],[0.70234113712374557,"#5BBD6C"],[0.70568561872909707,"#5CBD6C"],[0.70903010033444847,"#5DBE6B"],[0.71237458193979908,"#5EBF6A"],[0.71571906354515047,"#5FBF69"],[0.71906354515050197,"#61C068"],[0.72240802675585247,"#62C167"],[0.72575250836120397,"#63C166"],[0.72909698996655548,"#64C266"],[0.73244147157190598,"#65C365"],[0.73578595317725748,"#66C464"],[0.73913043478260887,"#67C463"],[0.74247491638795948,"#69C562"],[0.74581939799331087,"#6AC661"],[0.74916387959866237,"#6BC660"],[0.75250836120401288,"#6CC75F"],[0.75585284280936438,"#6DC85E"],[0.75919732441471588,"#6EC85D"],[0.76254180602006727,"#6FC95C"],[0.76588628762541788,"#70CA5B"],[0.76923076923076927,"#71CB5A"],[0.77257525083612077,"#72CB59"],[0.77591973244147128,"#73CC58"],[0.77926421404682278,"#74CD57"],[0.78260869565217428,"#75CD56"],[0.78595317725752478,"#76CE55"],[0.78929765886287628,"#77CF54"],[0.79264214046822767,"#78CF53"],[0.79598662207357829,"#79D052"],[0.79933110367892968,"#7AD151"],[0.80267558528428118,"#7CD151"],[0.80602006688963168,"#7FD250"],[0.80936454849498318,"#81D250"],[0.81270903010033468,"#84D34F"],[0.81605351170568519,"#87D34F"],[0.81939799331103669,"#89D34E"],[0.82274247491638808,"#8CD44D"],[0.82608695652173958,"#8ED44D"],[0.82943143812709008,"#91D54C"],[0.83277591973244158,"#93D54C"],[0.83612040133779209,"#95D54B"],[0.83946488294314359,"#98D64B"],[0.84280936454849509,"#9AD64A"],[0.84615384615384648,"#9DD74A"],[0.84949832775919709,"#9FD749"],[0.85284280936454848,"#A1D748"],[0.85618729096989998,"#A3D848"],[0.85953177257525049,"#A6D847"],[0.86287625418060199,"#A8D947"],[0.86622073578595349,"#AAD946"],[0.86956521739130399,"#ACD946"],[0.87290969899665549,"#AFDA45"],[0.87625418060200688,"#B1DA44"],[0.8795986622073575,"#B3DB44"],[0.88294314381270889,"#B5DB43"],[0.88628762541806039,"#B7DB42"],[0.88963210702341189,"#BADC42"],[0.89297658862876239,"#BCDC41"],[0.89632107023411389,"#BEDC40"],[0.89966555183946439,"#C0DD40"],[0.9030100334448159,"#C2DD3F"],[0.90635451505016729,"#C4DE3E"],[0.90969899665551879,"#C6DE3E"],[0.91304347826086929,"#C8DE3D"],[0.91638795986622079,"#CBDF3C"],[0.91973244147157229,"#CDDF3B"],[0.9230769230769228,"#CFDF3B"],[0.9264214046822743,"#D1E03A"],[0.92976588628762569,"#D3E039"],[0.9331103678929763,"#D5E038"],[0.93645484949832769,"#D7E138"],[0.93979933110367919,"#D9E137"],[0.94314381270902969,"#DBE136"],[0.9464882943143812,"#DDE235"],[0.9498327759197327,"#DFE234"],[0.9531772575250832,"#E1E233"],[0.9565217391304347,"#E3E333"],[0.95986622073578609,"#E5E332"],[0.9632107023411367,"#E7E331"],[0.96655518394648809,"#E9E430"],[0.9698996655518396,"#EBE42F"],[0.9732441471571911,"#EDE42E"],[0.9765886287625416,"#EFE52D"],[0.9799331103678931,"#F1E52C"],[0.9832775919732436,"#F3E52B"],[0.9866220735785951,"#F5E62A"],[0.98996655518394649,"#F7E629"],[0.993311036789298,"#F9E627"],[0.9966555183946485,"#FBE726"],[1,"#FDE725"]],"colorbar":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"thickness":23.039999999999996,"title":"Temp.","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"tickmode":"array","ticktext":["24","25","26","27"],"tickvals":[0.058767361111110812,0.31831597222222191,0.57786458333333313,0.83741319444444418],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716894984},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":28.988330796549977,"r":7.3059360730593621,"b":28.330796549974643,"l":28.493150684931514},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[2010,2021],"tickmode":"array","ticktext":["2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"],"tickvals":[2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"categoryorder":"array","categoryarray":["2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,12.6],"tickmode":"array","ticktext":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"tickvals":[1,2,3,4.0000000000000009,5,6,7.0000000000000009,8,9,10,11,12],"categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716894984},"title":{"text":"Temp.","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"18444a613e79":{"x":{},"y":{},"fill":{},"type":"heatmap"}},"cur_data":"18444a613e79","visdat":{"18444a613e79":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-yog-temp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Alex’s work
+</figcaption>
+</figure>
+</div>
+</div>
+<ol type="1">
+<li><p>What patterns or trends can you observe in Alex’s visualization (<a href="#fig-heatmap-yog-temp" class="quarto-xref">Figure&nbsp;2</a>)?</p></li>
+<li><p>How does this representation help convey the message compared to the original diagram?</p></li>
+<li><p>How could you represent this figure more efficiently using only numbers? What would that look like?</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Decoding Data with Matrices
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The matrix below shows the average temperature for each quarter at Bromo Tengger Semeru National Park from 2016 to 2020. Each row corresponds to a year (2016–2020), and each column represents a quarter: Q1 (Jan–Mar), Q2 (Apr–Jun), Q3 (Jul–Sep), and Q4 (Oct–Dec).</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+26.12 &amp; 25.73 &amp; 25.03 &amp; 25.36 \\
+25.03 &amp; 24.68 &amp; 24.48 &amp; 26.15 \\
+24.90 &amp; 25.10 &amp; 24.64 &amp; 26.45 \\
+25.40 &amp; 24.71 &amp; 24.65 &amp; 27.78 \\
+26.01 &amp; 25.21 &amp; 24.94 &amp; 25.95 \\
+\end{pmatrix}
+\]</span></p>
+<ol type="1">
+<li><p>What is the average temperature for the third quarter (Jul–Sep) of 2020?</p></li>
+<li><p>How would you describe the trend in the average temperature throughout 2019?</p></li>
+<li><p>Which year had the highest average temperature? Which year had the lowest?</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Are You Ready for More?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>To answer the third question, your friend Paulina created a new matrix that shows the average temperature for each year. The matrix is shown below. Can you explain in detail what she did to create this matrix?</p>
+<p><span class="math display">\[
+\begin{pmatrix}25.56 \\25.08 \\25.27 \\25.63 \\25.52 \\\end{pmatrix}
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matrices are powerful tools in mathematics that help us organize and represent data in a structured way. A matrix is simply a grid of numbers arranged in rows and columns. It can be used to display various types of data, such as temperature, sales figures, or any other information that can be grouped into categories.</p>
+<p>For example, you can use a matrix to represent temperature data. Let’s say we want to show the average temperature at a specific place throughout the year. Instead of writing down a long list of numbers, we can arrange the temperature data in a matrix. Each row could represent a year, and each column could represent a season or a specific time period, such as months or quarters.</p>
+<p>For instance, the following matrix shows the average temperature at Bromo Tengger Semeru National Park for each quarter of the year, from 2016 to 2020:</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+26.12 &amp; 25.73 &amp; 25.03 &amp; 25.36 \\
+25.03 &amp; 24.68 &amp; 24.48 &amp; 26.15 \\
+24.90 &amp; 25.10 &amp; 24.64 &amp; 26.45 \\
+25.40 &amp; 24.71 &amp; 24.65 &amp; 27.78 \\
+26.01 &amp; 25.21 &amp; 24.94 &amp; 25.95 \\
+\end{pmatrix}
+\]</span> In this matrix:</p>
+<ul>
+<li><p>The rows represent the years (2016 to 2020).</p></li>
+<li><p>The columns represent the quarters of the year (Jan-Mar, Apr-Jun, Jul-Sep, Oct-Dec).</p></li>
+<li><p>The numbers inside the matrix represent the average temperature for each quarter.</p></li>
+</ul>
+<p>Using a matrix to represent temperature data makes it easier to analyze and spot patterns, such as trends in temperature over time or comparing different years and seasons. Matrices help us organize and interpret data more efficiently, providing clear insights into the information.</p>
+</div>
+</div>
+</section>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<section id="from-numbers-to-visualization-exploring-matrices-heatmaps-and-3d-models" class="level3">
+<h3 class="anchored" data-anchor-id="from-numbers-to-visualization-exploring-matrices-heatmaps-and-3d-models">From Numbers to Visualization: Exploring Matrices, Heatmaps, and 3D Models</h3>
+<p>Let’s turn matrices into heatmaps and 3D models!</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notice and Wonder
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div>
+
+</div>
+<div class="row quarto-layout-panel" data-layout="[1, 1]">
+<div class="quarto-layout-row">
+<div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>matrix_example <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">10</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">3</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> matrix_example,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Rowv =</span> <span class="cn">NA</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Colv =</span> <span class="cn">NA</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> <span class="st">"none"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="students_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="students_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>What do you notice? What do you wonder?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exploring Matrices and Visualizing with Heatmaps
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the interactive code block below to create a matrix called <code>matrix_example_2</code>. Modify the values in the <code>data</code>, <code>nrow</code>, and <code>byrow</code> (TRUE or FALSE) arguments to explore their meanings. Click the “Run Code” button to see the results. Based on your exploration, what do you think each of these arguments does?</p>
+<div class="cell">
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImV2YWwiOnRydWUsImVkaXQiOnRydWV9LCJjb2RlIjoibWF0cml4X2V4YW1wbGVfMiA8LSBtYXRyaXgoXG4gIGRhdGEgPSBjKDYsIDIsIDQsIDUsIDYsIDEsIDMsIDIpLFxuICBucm93ID0gNCxcbiAgYnlyb3cgPSBUUlVFXG4pXG5cbnByaW50KG1hdHJpeF9leGFtcGxlXzIpIn0=
+</script>
+</div>
+</div>
+<p>Once you’ve created your matrix, use the code block below to generate a heatmap of <code>matrix_example_2</code>.</p>
+<div class="cell">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImV2YWwiOnRydWUsImVkaXQiOnRydWV9LCJjb2RlIjoiaGVhdG1hcChcbiAgeCA9IG1hdHJpeF9leGFtcGxlXzIsXG4gIFJvd3YgPSBOQSxcbiAgQ29sdiA9IE5BLFxuICBzY2FsZSA9IFwibm9uZVwiXG4pIn0=
+</script>
+</div>
+</div>
+<p>Observe how the matrix values are represented in the heatmap. Experiment by changing the matrix values and regenerating the heatmap to see how it changes.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Visualizing Social Media Platform Overlaps
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#tbl-sm-overlaps" class="quarto-xref">Table&nbsp;1</a> shows the percentage of active users (age 16+) outside China who also use other social media platforms.</p>
+<div id="tbl-sm-overlaps" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sm-overlaps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Social media platform audience overlaps. Source: <a href="https://datareportal.com/social-media-users" target="_blank">DataReportal</a>
+</figcaption>
+<div aria-describedby="tbl-sm-overlaps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Using Youtube</th>
+<th>Using Facebook</th>
+<th>Using WhatsApp</th>
+<th>Using Instagram</th>
+<th>Using TikTok</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Youtube users</td>
+<td>100</td>
+<td>74.6</td>
+<td>70.7</td>
+<td>76.9</td>
+<td>48.4</td>
+</tr>
+<tr class="even">
+<td>Facebook users</td>
+<td>73.5</td>
+<td>100</td>
+<td>73.3</td>
+<td>77.9</td>
+<td>53.2</td>
+</tr>
+<tr class="odd">
+<td>WhatsApp users</td>
+<td>75.3</td>
+<td>77.8</td>
+<td>100</td>
+<td>78.8</td>
+<td>49.9</td>
+</tr>
+<tr class="even">
+<td>Instagram users</td>
+<td>77.1</td>
+<td>80.5</td>
+<td>76.6</td>
+<td>100</td>
+<td>53.7</td>
+</tr>
+<tr class="odd">
+<td>TikTok users</td>
+<td>77.2</td>
+<td>81.9</td>
+<td>72.5</td>
+<td>80.1</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ol type="1">
+<li><p>Use the data from <a href="#tbl-sm-overlaps" class="quarto-xref">Table&nbsp;1</a> to create a matrix in R and name it <code>matrix_sm_overlaps</code>.</p></li>
+<li><p>Assign appropriate row and column names using the <code>rownames()</code> and <code>colnames()</code> functions to represent the social media platforms.</p></li>
+<li><p>Visualize the overlaps by creating a heatmap from the matrix.</p></li>
+</ol>
+<div class="cell" data-exercise="ex_1">
+<div>
+<div id="webr-3" class="exercise-cell">
+
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMSJ9LCJjb2RlIjoiXG5tYXRyaXhfc21fb3ZlcmxhcHMgPC0gbWF0cml4KFxuICBkYXRhID0gX19fX19fLFxuICBucm93ID0gX19fX19fLFxuICBieXJvdyA9IF9fX19fXyxcbilcblxucm93bmFtZXMobWF0cml4X3NtX292ZXJsYXBzKSA8LSBjKFwiWW91dHViZSB1c2Vyc1wiLCBfX19fX18pXG5jb2xuYW1lcyhtYXRyaXhfc21fb3ZlcmxhcHMpIDwtIGMoXCJVc2luZyBZb3V0dWJlXCIsIF9fX19fXylcblxuaGVhdG1hcChcbiAgeCA9IF9fX19fXyxcbiAgUm93diA9IF9fX19fLFxuICBDb2x2ID0gX19fX18sXG4gIHNjYWxlID0gX19fX19cbikifQ==
+</script>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Are You Ready for More?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Take a look at the code below and think about what it’s doing.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>matrix_example_3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">3</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>red_blue <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> matrix_example_3,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Rowv =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Colv =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">labRow =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">labCol =</span> <span class="cn">NA</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> <span class="st">"none"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">red_blue</span>(<span class="dv">2</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="students_files/figure-html/unnamed-chunk-11-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="students_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now, using the idea from the previous code, create a chessboard pattern as a heatmap of a matrix! Your result should look similar to the example shown in <a href="#fig-chessboard" class="quarto-xref">Figure&nbsp;3</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-chessboard" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chessboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="students_files/figure-html/fig-chessboard-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: A chessboard"><img src="students_files/figure-html/fig-chessboard-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chessboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: A chessboard
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-exercise="ex_2">
+<div>
+<div id="webr-4" class="exercise-cell">
+
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMiJ9LCJjb2RlIjoiXG5tYXRyaXhfY2hlc3Nib2FyZCA8LSBtYXRyaXgoXG4gIGRhdGEgPSBfX19fX18sXG4gIG5yb3cgPSBfX19fX18sXG4gIGJ5cm93ID0gX19fX19fLFxuKVxuXG5ibGFja193aGl0ZSA8LSBjb2xvclJhbXBQYWxldHRlKFxuICBjb2xvcnMgPSBjKF9fX19fXylcbilcblxuaGVhdG1hcChcbiAgeCA9IF9fX19fXyxcbiAgUm93diA9IE5BLFxuICBDb2x2ID0gTkEsXG4gIGxhYlJvdyA9IE5BLFxuICBsYWJDb2wgPSBOQSxcbiAgc2NhbGUgPSBcIm5vbmVcIixcbiAgY29sID0gX19fX19fXG4pIn0=
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exploring Data Representations: From Matrix to 3D Model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Heatmaps are just one way to represent a matrix. We can also create a 3D model from a matrix. Below, you’ll find three representations of the same data:</p>
+<div id="fig-three-reps" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-three-reps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="a_matrix.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Matrix"><img src="a_matrix.png" class="img-fluid figure-img"></a></p>
+<figcaption>Matrix</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="2D_matrix.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Heatmap"><img src="2D_matrix.png" class="img-fluid figure-img"></a></p>
+<figcaption>Heatmap</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="3D_matrix.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="3D model"><img src="3D_matrix.png" class="img-fluid figure-img"></a></p>
+<figcaption>3D model</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-three-reps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Different representations of the same data
+</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li><p>Compare and contrast these three representations. What are the strengths and weaknesses of each?</p></li>
+<li><p>Now, focus on the 3D visualization. How would you create such a 3D model starting with a matrix? Identify the steps or processes involved.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Heatmaps and 3D visualizations are practical and engaging ways to represent data from matrices. A matrix, which is a structured grid of numbers organized in rows and columns, allows us to summarize and analyze data effectively. For instance, a heatmap can be used to visually represent the values in a matrix with color gradients, making patterns, overlaps, or trends easy to spot.</p>
+<p>Imagine you’re analyzing social media usage overlaps, where each cell in the matrix represents the percentage of users shared between platforms. A heatmap of this matrix would use colors to highlight these overlaps, with stronger colors for higher percentages. Similarly, we can take this idea further by creating a 3D visualization, where the numbers in the matrix determine the height of each block in a 3D model.</p>
+<p>Through this lesson, you saw how matrices can transform from abstract numbers into powerful visual tools. Heatmaps offer an intuitive way to see relationships at a glance, while 3D visualizations provide a tangible, spatial perspective on the same data. Together, these representations help uncover insights and bring data to life.</p>
+</div>
+</div>
+</section>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<section id="modeling-the-world-topography-with-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="modeling-the-world-topography-with-matrices">Modeling the World: Topography with Matrices</h3>
+<p>Let’s bring matrices to life with 3D printing!</p>
+<div class="lightbox callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notice and Wonder
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="merapi_model_1.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Image: konsepsi.wordpress.com"><img src="merapi_model_1.jpg" class="img-fluid figure-img" alt="Image: konsepsi.wordpress.com"></a></p>
+<figcaption>Image: konsepsi.wordpress.com</figcaption>
+</figure>
+</div>
+<p>What do you notice? What do you wonder?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exploring Elevation Data Online
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Shuttle Radar Topography Mission (SRTM) was a NASA mission that mapped the Earth’s surface to produce high-resolution elevation data. This data is invaluable for understanding topography and has wide-ranging applications, from environmental modeling and urban planning to disaster risk assessment. By representing elevation data in a matrix form, we can use mathematical tools to analyze and visualize terrains, making it easier to study and solve real-world problems.</p>
+<ol type="1">
+<li><p>What type of information does the SRTM elevation data provide? How could it be used in real-world applications?</p></li>
+<li><p>Explore <a href="https://dwtkns.com/srtm30m/" target="_blank">the Derek Watkins’ Tile Downloader website</a>. How is the elevation data presented? What do “30-meter resolution” and “tile” mean?</p></li>
+<li><p>How might the data from a single tile be represented as a matrix? What does each value in the matrix represent in terms of elevation?</p></li>
+<li><p>If you wanted to use this data to create a physical 3D model, what steps would you take, starting from the downloaded data?</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Elevating Data into 3D Models
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>How can elevation values in a matrix represent the physical features of a landscape?</p></li>
+<li><p>If we visualize this matrix as a grid, how would the differences between adjacent elevation values appear in a 3D model?</p></li>
+<li><p>What steps are needed to turn a matrix of elevation data into a 3D model? Can you describe these steps in terms of inputs, processes, and outputs?</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Are You Ready for More?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>One way to create a 3D model from elevation data is by using R programming with packages such as <a href="https://CRAN.R-project.org/package=rayshader" target="_blank">{rayshader}</a>, <a href="https://CRAN.R-project.org/package=terra" target="_blank">{terra}</a>, and <a href="https://CRAN.R-project.org/package=raster" target="_blank">{raster}</a>. Below are the codes that will help you generate the 3D model of Mount Merapi.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rayshader)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>S08E110 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">"S08E110.hgt"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>merapi_boundaries <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extent</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fl">110.3967</span>, <span class="fl">110.4967</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">7.590278</span>, <span class="sc">-</span><span class="fl">7.490278</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>merapi_matrix <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">crop</span>(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> S08E110,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> merapi_boundaries</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  rayshader<span class="sc">::</span><span class="fu">raster_to_matrix</span>()</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>merapi_hillshade <span class="ot">&lt;-</span> <span class="fu">sphere_shade</span>(</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">heightmap =</span> merapi_matrix</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_3d</span>(</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">hillshade =</span> merapi_hillshade,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">heightmap =</span> merapi_matrix,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">zscale =</span> <span class="dv">30</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="fu">save_3dprint</span>(</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"merapi_3d.stl"</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxwidth =</span> <span class="dv">150</span>,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"mm"</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li><p>Can you explain what each step of the code does?</p></li>
+<li><p>What do you think the result of the code will look like? You can download the resulting STL file <a href="https://github.com/ydkristanto/advanced-3d-printing-jku/blob/main/merapi_3d.stl" target="_blank">here</a>. To view it, you can use an STL viewer, such as <a href="https://www.viewstl.com/" target="_blank">viewstl.com</a>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+3D Printing the Model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s print the 3D model! Use the STL file from the previous activity to print the model using a 3D printer.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matrices are a powerful tool for representing and analyzing data in a structured way. By converting elevation data into a matrix, we can visualize topographic features like mountains and valleys. In this lesson, we used matrices to represent elevation data from the Shuttle Radar Topography Mission (SRTM), and then transformed that data into a 3D model, simulating the physical features of the Earth’s surface. For example, we modeled and 3D-printed a representation of Mount Merapi, a well-known active volcano in Indonesia. The outcome of this process is shown in <a href="#fig-merapi-model" class="quarto-xref">Figure&nbsp;5</a>.</p>
+<div id="fig-merapi-model" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-merapi-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="merapi_3d_model.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="3D model of Mount Merapi"><img src="merapi_3d_model.png" class="img-fluid figure-img"></a></p>
+<figcaption>3D model of Mount Merapi</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="printed_merapi.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="3D printed model of Mount Merapi"><img src="printed_merapi.jpeg" class="img-fluid figure-img"></a></p>
+<figcaption>3D printed model of Mount Merapi</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-merapi-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: 3D model and 3D printed model of Mount Merapi, created from elevation data, showcasing the transformation from digital representation to physical model.
+</figcaption>
+</figure>
+</div>
+<p>This exercise helps us see how abstract data can be turned into meaningful, real-world representations, such as terrain models, and how mathematics can be applied to understand and visualize landscapes. Through this lesson, you learned how matrices can be used to model topography and how 3D printing brings these models</p>
+</div>
+</div>
+</section>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<ol type="1">
+<li><p>Emma wants to know the prices of iPhones on Amazon. She surveys the prices for the 128 GB, 256 GB, and 512 GB models of the iPhone 15 Plus, iPhone 16, iPhone 16 Plus, and iPhone 16 Pro. The prices she found are as follows (in euros):</p>
+<ul>
+<li><p>For 128 GB: iPhone 15 Plus (€919), iPhone 16 (€876), iPhone 16 Plus (€1078), iPhone 16 Pro (€1143)</p></li>
+<li><p>For 256 GB: iPhone 15 Plus (€1037), iPhone 16 (€1055), iPhone 16 Plus (€1188), iPhone 16 Pro (€1294)</p></li>
+<li><p>For 512 GB: iPhone 15 Plus (€1289), iPhone 16 (€1269), iPhone 16 Plus (€1354), iPhone 16 Pro (€1592)</p></li>
+</ul>
+<p>Represent this data as a matrix!</p></li>
+<li><p>In the interactive code block below, create a matrix named <code>matrix_iphone_prices</code> to store the iPhone prices for different models and storage sizes. Then, visualize the matrix as a heatmap to better understand the price differences.</p>
+<div class="cell" data-exercise="practice_2">
+<div>
+<div id="webr-5" class="exercise-cell">
+
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoicHJhY3RpY2VfMiJ9LCJjb2RlIjoiXG5tYXRyaXhfaXBob25lX3ByaWNlcyA8LSBtYXRyaXgoXG4gIGRhdGEgPSBjKF9fX19fXyksXG4gIG5yb3cgPSBfX19fX18sXG4gIGJ5cm93ID0gX19fX19fXG4pXG5cbmNvbG5hbWVzKG1hdHJpeF9pcGhvbmVfcHJpY2VzKSA8LSBjKF9fX19fXylcbnJvd25hbWVzKG1hdHJpeF9pcGhvbmVfcHJpY2VzKSA8LSBjKF9fX19fXylcblxuaGVhdG1hcChcbiAgeCA9IF9fX19fXyxcbiAgUm93diA9IE5BLFxuICBDb2x2ID0gTkEsXG4gIHNjYWxlID0gXCJub25lXCJcbikifQ==
+</script>
+</div>
+</div></li>
+<li><p><a href="#fig-practice-3" class="quarto-xref">Figure&nbsp;6</a> shows a 3D visualization of a matrix. Write down the matrix with approximate values.</p>
+<div id="fig-practice-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-practice-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="matrix_plot_gg.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;6: 3D visualization of a matrix"><img src="matrix_plot_gg.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-practice-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: 3D visualization of a matrix
+</figcaption>
+</figure>
+</div></li>
+<li><p>Model the topography of your selected places and then print the 3D models!</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<script type="webr-data">
+eyJyZW5kZXJfZGYiOiJkZWZhdWx0IiwicGFja2FnZXMiOnsicmVwb3MiOltdLCJwa2dzIjpbImV2YWx1YXRlIiwia25pdHIiLCJodG1sdG9vbHMiXX0sIm9wdGlvbnMiOnsiYmFzZVVybCI6Imh0dHBzOi8vd2Vici5yLXdhc20ub3JnL3YwLjQuMS8ifX0=
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC01Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV81O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIiwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0IiwiaW5saW5lIjpmYWxzZX0seyJjZWxsTmFtZSI6IndlYnItNSIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici01LWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuX3dlYnJfZmVlZGJhY2tfNSA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfNS5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4iLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiaW5saW5lIjpmYWxzZX0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4iLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJpbmxpbmUiOmZhbHNlfSx7ImNlbGxOYW1lIjoid2Vici00Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTQtY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV80ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl80LCB7fSk7XG5fd2Vicl9mZWVkYmFja180ID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV80LmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiIsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJpbmxpbmUiOmZhbHNlfSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMyIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMztcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImlubGluZSI6ZmFsc2V9LHsiY2VsbE5hbWUiOiJ3ZWJyLTMiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItMy1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzMgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzMsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzMuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIiwibWV0aG9kTmFtZSI6ImludGVycHJldCIsImlubGluZSI6ZmFsc2V9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yIiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8yO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIiwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0IiwiaW5saW5lIjpmYWxzZX0seyJjZWxsTmFtZSI6IndlYnItMiIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMiA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzIgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzIsIHt9KTtcbiIsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJpbmxpbmUiOmZhbHNlfSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMSIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiIsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImlubGluZSI6ZmFsc2V9LHsiY2VsbE5hbWUiOiJ3ZWJyLTEiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xLCB7fSk7XG4iLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiaW5saW5lIjpmYWxzZX0seyJjZWxsTmFtZSI6IndlYnItcHJlbHVkZSIsInNvdXJjZSI6IndlYlJPanMgPSB7XG4gIGNvbnN0IHsgV2ViUiB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZS5XZWJSO1xuICBjb25zdCB7XG4gICAgV2ViUkV2YWx1YXRvcixcbiAgICBXZWJSRW52aXJvbm1lbnRNYW5hZ2VyLFxuICAgIHNldHVwUixcbiAgICBiNjREZWNvZGUsXG4gICAgY29sbGFwc2VQYXRoXG4gIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHN0YXR1c0NvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1zdGF0dXNcIik7XG4gIGNvbnN0IGluZGljYXRvckNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGluZGljYXRvckNvbnRhaW5lci5jbGFzc0xpc3QucmVtb3ZlKFwiZC1ub25lXCIpO1xuXG4gIGxldCBzdGF0dXNUZXh0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKVxuICBzdGF0dXNUZXh0LmNsYXNzTGlzdCA9IFwiZXhlcmNpc2UtbG9hZGluZy1kZXRhaWxzXCI7XG4gIHN0YXR1c1RleHQgPSBzdGF0dXNDb250YWluZXIuYXBwZW5kQ2hpbGQoc3RhdHVzVGV4dCk7XG4gIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5pdGlhbGlzZWA7XG5cbiAgLy8gSG9pc3QgaW5kaWNhdG9yIG91dCBmcm9tIGZpbmFsIHNsaWRlIHdoZW4gcnVubmluZyB1bmRlciByZXZlYWxcbiAgY29uc3QgcmV2ZWFsU3RhdHVzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgLmV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpZiAocmV2ZWFsU3RhdHVzKSB7XG4gICAgcmV2ZWFsU3RhdHVzLnJlbW92ZSgpO1xuICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsID4gLnNsaWRlc1wiKS5hcHBlbmRDaGlsZChyZXZlYWxTdGF0dXMpO1xuICB9XG5cbiAgLy8gTWFrZSBhbnkgcmV2ZWFsIHNsaWRlcyB3aXRoIGxpdmUgY2VsbHMgc2Nyb2xsYWJsZVxuICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKFwiLnJldmVhbCAuZXhlcmNpc2UtY2VsbFwiKS5mb3JFYWNoKChlbCkgPT4ge1xuICAgIGVsLmNsb3Nlc3QoJ3NlY3Rpb24uc2xpZGUnKS5jbGFzc0xpc3QuYWRkKFwic2Nyb2xsYWJsZVwiKTtcbiAgfSlcblxuICAvLyB3ZWJSIHN1cHBsZW1lbnRhbCBkYXRhIGFuZCBvcHRpb25zXG4gIGNvbnN0IGRhdGFDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItZGF0YVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGRhdGEgPSBKU09OLnBhcnNlKGI2NERlY29kZShkYXRhQ29udGVudCkpO1xuXG4gIC8vIEdyYWIgbGlzdCBvZiByZXNvdXJjZXMgdG8gYmUgZG93bmxvYWRlZFxuICBjb25zdCBmaWxlc0NvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwidmZzLWZpbGVcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBmaWxlcyA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGZpbGVzQ29udGVudCkpO1xuXG4gIC8vIEluaXRpYWxpc2Ugd2ViUiBhbmQgc2V0dXAgZm9yIFIgY29kZSBldmFsdWF0aW9uXG4gIGxldCB3ZWJSUHJvbWlzZSA9IChhc3luYyAod2ViUikgPT4ge1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgd2ViUmA7XG4gICAgYXdhaXQgd2ViUi5pbml0KCk7XG5cbiAgICAvLyBJbnN0YWxsIHByb3ZpZGVkIGxpc3Qgb2YgcGFja2FnZXNcbiAgICAvLyBFbnN1cmUgd2ViUiBkZWZhdWx0IHJlcG8gaXMgaW5jbHVkZWRcbiAgICBkYXRhLnBhY2thZ2VzLnJlcG9zLnB1c2goXCJodHRwczovL3JlcG8uci13YXNtLm9yZ1wiKVxuICAgIGF3YWl0IGRhdGEucGFja2FnZXMucGtncy5tYXAoKHBrZykgPT4gKCkgPT4ge1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiAke3BrZ31gO1xuICAgICAgcmV0dXJuIHdlYlIuZXZhbFJWb2lkKGBcbiAgICAgICAgd2Vicjo6aW5zdGFsbChwa2csIHJlcG9zID0gcmVwb3MpXG4gICAgICAgIGxpYnJhcnkocGtnLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpXG4gICAgICBgLCB7IGVudjoge1xuICAgICAgICBwa2c6IHBrZyxcbiAgICAgICAgcmVwb3M6IGRhdGEucGFja2FnZXMucmVwb3MsXG4gICAgICB9fSk7XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICAvLyBEb3dubG9hZCBhbmQgaW5zdGFsbCByZXNvdXJjZXNcbiAgICBhd2FpdCBmaWxlcy5tYXAoKGZpbGUpID0+IGFzeW5jICgpID0+IHtcbiAgICAgIGNvbnN0IG5hbWUgPSBmaWxlLnN1YnN0cmluZyhmaWxlLmxhc3RJbmRleE9mKCcvJykgKyAxKTtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcmVzb3VyY2U6ICR7bmFtZX1gO1xuICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChmaWxlKTtcbiAgICAgIGlmICghcmVzcG9uc2Uub2spIHtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBDYW4ndCBkb3dubG9hZCBcXGAke2ZpbGV9XFxgLiBFcnJvciAke3Jlc3BvbnNlLnN0YXR1c306IFwiJHtyZXNwb25zZS5zdGF0dXNUZXh0fVwiLmApO1xuICAgICAgfVxuICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3BvbnNlLmFycmF5QnVmZmVyKCk7XG5cbiAgICAgIC8vIFN0b3JlIFVSTHMgaW4gdGhlIGN3ZCB3aXRob3V0IGFueSBzdWJkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBpZiAoZmlsZS5pbmNsdWRlcyhcIjovL1wiKSkge1xuICAgICAgICBmaWxlID0gbmFtZTtcbiAgICAgIH1cblxuICAgICAgLy8gQ29sbGFwc2UgaGlnaGVyIGRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGZpbGUgPSBjb2xsYXBzZVBhdGgoZmlsZSk7XG5cbiAgICAgIC8vIENyZWF0ZSBkaXJlY3RvcnkgdHJlZSwgaWdub3JpbmcgXCJkaXJlY3RvcnkgZXhpc3RzXCIgVkZTIGVycm9yc1xuICAgICAgY29uc3QgcGFydHMgPSBmaWxlLnNwbGl0KCcvJykuc2xpY2UoMCwgLTEpO1xuICAgICAgbGV0IHBhdGggPSAnJztcbiAgICAgIHdoaWxlIChwYXJ0cy5sZW5ndGggPiAwKSB7XG4gICAgICAgIHBhdGggKz0gcGFydHMuc2hpZnQoKSArICcvJztcbiAgICAgICAgdHJ5IHtcbiAgICAgICAgICBhd2FpdCB3ZWJSLkZTLm1rZGlyKHBhdGgpO1xuICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgaWYgKCFlLm1lc3NhZ2UuaW5jbHVkZXMoXCJGUyBlcnJvclwiKSkge1xuICAgICAgICAgICAgdGhyb3cgZTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cblxuICAgICAgLy8gV3JpdGUgdGhpcyBmaWxlIHRvIHRoZSBWRlNcbiAgICAgIHJldHVybiBhd2FpdCB3ZWJSLkZTLndyaXRlRmlsZShmaWxlLCBuZXcgVWludDhBcnJheShkYXRhKSk7XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluc3RhbGxpbmcgd2ViUiBzaGltc2A7XG4gICAgYXdhaXQgd2ViUi5ldmFsUlZvaWQoYHdlYnI6OnNoaW1faW5zdGFsbCgpYCk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYFdlYlIgZW52aXJvbm1lbnQgc2V0dXBgO1xuICAgIGF3YWl0IHNldHVwUih3ZWJSLCBkYXRhKTtcblxuICAgIHN0YXR1c1RleHQucmVtb3ZlKCk7XG4gICAgaWYgKHN0YXR1c0NvbnRhaW5lci5jaGlsZHJlbi5sZW5ndGggPT0gMCkge1xuICAgICAgc3RhdHVzQ29udGFpbmVyLnBhcmVudE5vZGUucmVtb3ZlKCk7XG4gICAgfVxuICAgIHJldHVybiB3ZWJSO1xuICB9KShuZXcgV2ViUihkYXRhLm9wdGlvbnMpKTtcblxuICAvLyBLZWVwIHRyYWNrIG9mIGluaXRpYWwgT0pTIGJsb2NrIHJlbmRlclxuICBjb25zdCByZW5kZXJlZE9qcyA9IHt9O1xuXG4gIGNvbnN0IHByb2Nlc3MgPSBhc3luYyAoY29udGV4dCwgaW5wdXRzKSA9PiB7XG4gICAgY29uc3Qgd2ViUiA9IGF3YWl0IHdlYlJQcm9taXNlO1xuICAgIGNvbnN0IGV2YWx1YXRvciA9IG5ldyBXZWJSRXZhbHVhdG9yKHdlYlIsIGNvbnRleHQpXG4gICAgYXdhaXQgZXZhbHVhdG9yLnByb2Nlc3MoaW5wdXRzKTtcbiAgICByZXR1cm4gZXZhbHVhdG9yLmNvbnRhaW5lcjtcbiAgfVxuXG4gIHJldHVybiB7XG4gICAgcHJvY2VzcyxcbiAgICB3ZWJSUHJvbWlzZSxcbiAgICByZW5kZXJlZE9qcyxcbiAgfTtcbn1cbiIsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsImlubGluZSI6ZmFsc2V9XX0=
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-copyright"><h2 class="anchored quarto-appendix-heading">Copyright</h2><div class="quarto-appendix-contents"><div>© 2024 Yosep Dwi Kristanto</div></div></section></div></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/ydkristanto/advanced-3d-printing-jku/edit/main/students.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ydkristanto/advanced-3d-printing-jku/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,659 @@
+---
+title: "Mathematics Exploration with 3D Printing"
+subtitle: "For Students"
+description: "This series of learning activities explores the power of matrices in mathematics for organizing and analyzing data. You learn to use basic R programming to transform matrices into engaging visualizations such as heatmaps and 3D models, making abstract data tangible and intuitive. By integrating 3D printing, the lessons culminate in creating physical models, demonstrating the practical application of data visualization techniques to represent real-world phenomena."
+keywords: 
+  - matrix
+  - data visualization
+  - heatmap
+  - 3D model
+  - 3D printing
+author:
+  - name: Yosep Dwi Kristanto
+    url: https://people.usd.ac.id/~ydkristanto/
+    affiliation: PhD in Education, Johannes Kepler University Linz
+    affiliation-url: https://www.jku.at/en
+    orcid: 0000-0003-1446-0422
+date: 2024/11/25
+date-modified: 2024/12/06
+lightbox: true
+format:
+  live-html:
+    toc: true
+    anchor-sections: true
+    smooth-scroll: true
+    code-link: true
+image: "printed_merapi.jpeg"
+image-alt: "3D printed silver model of Mount Merapi photographed from the 12th floor in Linz, Austria, with a detailed view of the topographic features."
+copyright: "© 2024 Yosep Dwi Kristanto"
+license: "CC BY"
+editor: visual
+execute: 
+  echo: false
+editor_options: 
+  chunk_output_type: console
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(plotly)
+library(rayshader)
+```
+
+:::::::::::::::::::::::::: panel-tabset
+## Lesson 1
+
+### Introduction to Matrix Representation
+
+Let's explore some data representations!
+
+::: {.callout-note icon="false"}
+### Data Talks
+
+```{r}
+yog_climate <- read_csv(
+  "POWER_Point_Monthly_19810101_20221231_007d79S_110d36E_UTC.csv",
+  skip = 10,
+  show_col_types = FALSE
+)
+yog_temp <- yog_climate |> 
+  filter(PARAMETER == "T2M") |> 
+  pivot_longer(
+    cols = JAN:ANN,
+    names_to = "month",
+    values_to = "temp"
+  ) |> 
+  select(-PARAMETER) |> 
+  mutate(
+    month = factor(
+      str_to_sentence(month),
+      levels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Ann")
+    )
+  )
+yog_temp_month <- yog_temp |> 
+  filter(month != "Ann") |> 
+  group_by(month) |> 
+  summarise(
+    temp_avg = mean(temp, na.rm = TRUE),
+    .groups = "drop"
+  )
+yog_temp_year <- yog_temp |> 
+  filter(
+    month == "Ann"
+  ) |> 
+  select(-month)
+```
+
+```{r}
+#| label: fig-temp-yog
+#| fig-cap: "Understanding Yogyakarta's temperature trends (2011--2020)"
+#| fig-asp: 0.5625
+
+plot_yog_temp <- yog_temp |> 
+  filter(
+    month != "Ann",
+    YEAR >= 2011,
+    YEAR <= 2020
+  ) |> 
+  ggplot(
+    aes(x = month, y = temp)
+  ) + 
+  geom_line(
+    aes(group = YEAR),
+    linewidth = .5,
+    color = "#1b9e77"
+  ) + 
+  geom_point(
+    size = 1,
+    color = "#d95f02"
+  ) + 
+  scale_y_continuous(
+    limits = c(23, 28),
+    breaks = 24:28
+  ) + 
+  facet_wrap(vars(YEAR), ncol = 5) + 
+  theme_bw() + 
+  theme(
+    axis.text.x = element_text(
+      angle = 90
+    ),
+    axis.title.x = element_blank()
+  ) + 
+  labs(
+    title = "Average Monthly Temperature in Yogyakarta (2011–2020)",
+    y = "Average Temperature (°C)"
+  )
+ggplotly(plot_yog_temp)
+```
+
+What do you notice? What do you wonder?
+:::
+
+::: {.callout-note icon="false"}
+## Interpreting and Redesigning Data Representations
+
+1.  What is the main message or insight about Yogyakarta's average monthly temperature (2011–2020) as shown in @fig-temp-yog?
+
+2.  Do you think the diagram effectively communicates this message? What could be improved?
+
+3.  How would you redesign this diagram to convey the same message more clearly or engagingly? Why?
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## Are You Ready for More?
+
+@fig-heatmap-yog-temp is a visual representation provided by your friend Alex as an alternative to convey the same message about Yogyakarta's average monthly temperature (2011–2020).
+
+```{r}
+#| label: fig-heatmap-yog-temp
+#| fig-cap: "Alex's work"
+#| fig-asp: 0.5625
+
+plot_yog_heatmap <- yog_temp |> 
+  filter(
+    YEAR >= 2011,
+    YEAR <= 2020,
+    month != "Ann"
+  ) |> 
+  mutate(YEAR = as.integer(YEAR)) |> 
+  rename(year = YEAR) |> 
+  ggplot(
+    aes(x = year, y = month, fill = temp)
+  ) + 
+  geom_tile(color = "white") + 
+  scale_fill_viridis_c(name = "Temp.") + 
+  scale_x_continuous(
+    breaks = 2011:2020
+  ) + 
+  theme_minimal() + 
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_text()
+  )
+ggplotly(plot_yog_heatmap)
+```
+
+1.  What patterns or trends can you observe in Alex's visualization (@fig-heatmap-yog-temp)?
+
+2.  How does this representation help convey the message compared to the original diagram?
+
+3.  How could you represent this figure more efficiently using only numbers? What would that look like?
+:::
+
+::: {.callout-note icon="false"}
+## Decoding Data with Matrices
+
+The matrix below shows the average temperature for each quarter at Bromo Tengger Semeru National Park from 2016 to 2020. Each row corresponds to a year (2016–2020), and each column represents a quarter: Q1 (Jan–Mar), Q2 (Apr–Jun), Q3 (Jul–Sep), and Q4 (Oct–Dec).
+
+```{r}
+semeru_temp <- read_csv(
+  "POWER_Point_Monthly_20110101_20201231_008d03S_112d94E_UTC.csv",
+  skip = 9,
+  show_col_types = FALSE
+)
+semeru_temp_matrix <- semeru_temp |> 
+  filter(
+    YEAR >= 2016,
+    YEAR <= 2020
+  ) |> 
+  select(-PARAMETER, -YEAR, -ANN) |> 
+  as.matrix()
+semeru_quart_matrix <- t(apply(semeru_temp_matrix, 1, function(row) {
+  c(
+    mean(row[1:3]),   # Q1: Jan, Feb, Mar
+    mean(row[4:6]),   # Q2: Apr, May, Jun
+    mean(row[7:9]),   # Q3: Jul, Aug, Sep
+    mean(row[10:12])  # Q4: Oct, Nov, Dec
+  )
+}))
+
+rownames(semeru_quart_matrix) <- 2016:2020
+colnames(semeru_quart_matrix) <- c("Q1", "Q2", "Q3", "Q4")
+```
+
+$$
+\begin{pmatrix}
+26.12 & 25.73 & 25.03 & 25.36 \\
+25.03 & 24.68 & 24.48 & 26.15 \\
+24.90 & 25.10 & 24.64 & 26.45 \\
+25.40 & 24.71 & 24.65 & 27.78 \\
+26.01 & 25.21 & 24.94 & 25.95 \\
+\end{pmatrix}
+$$
+
+1.  What is the average temperature for the third quarter (Jul–Sep) of 2020?
+
+2.  How would you describe the trend in the average temperature throughout 2019?
+
+3.  Which year had the highest average temperature? Which year had the lowest?
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## Are You Ready for More?
+
+To answer the third question, your friend Paulina created a new matrix that shows the average temperature for each year. The matrix is shown below. Can you explain in detail what she did to create this matrix?
+
+$$
+\begin{pmatrix}25.56 \\25.08 \\25.27 \\25.63 \\25.52 \\\end{pmatrix}
+$$
+:::
+
+::: {.callout-important icon="false"}
+## Summary
+
+Matrices are powerful tools in mathematics that help us organize and represent data in a structured way. A matrix is simply a grid of numbers arranged in rows and columns. It can be used to display various types of data, such as temperature, sales figures, or any other information that can be grouped into categories.
+
+For example, you can use a matrix to represent temperature data. Let’s say we want to show the average temperature at a specific place throughout the year. Instead of writing down a long list of numbers, we can arrange the temperature data in a matrix. Each row could represent a year, and each column could represent a season or a specific time period, such as months or quarters.
+
+For instance, the following matrix shows the average temperature at Bromo Tengger Semeru National Park for each quarter of the year, from 2016 to 2020:
+
+$$
+\begin{pmatrix} 
+26.12 & 25.73 & 25.03 & 25.36 \\ 
+25.03 & 24.68 & 24.48 & 26.15 \\ 
+24.90 & 25.10 & 24.64 & 26.45 \\ 
+25.40 & 24.71 & 24.65 & 27.78 \\ 
+26.01 & 25.21 & 24.94 & 25.95 \\ 
+\end{pmatrix}
+$$ In this matrix:
+
+-   The rows represent the years (2016 to 2020).
+
+-   The columns represent the quarters of the year (Jan-Mar, Apr-Jun, Jul-Sep, Oct-Dec).
+
+-   The numbers inside the matrix represent the average temperature for each quarter.
+
+Using a matrix to represent temperature data makes it easier to analyze and spot patterns, such as trends in temperature over time or comparing different years and seasons. Matrices help us organize and interpret data more efficiently, providing clear insights into the information.
+:::
+
+## Lesson 2
+
+### From Numbers to Visualization: Exploring Matrices, Heatmaps, and 3D Models
+
+Let's turn matrices into heatmaps and 3D models!
+
+:::::: {.callout-note icon="false"}
+## Notice and Wonder
+
+::::: {.row layout="[1, 1]"}
+::: column
+``` r
+matrix_example <- matrix(
+  data = c(5, 3, 1, 7, 4, 10),
+  nrow = 3,
+  byrow = TRUE
+)
+
+heatmap(
+  x = matrix_example,
+  Rowv = NA,
+  Colv = NA,
+  scale = "none"
+)
+```
+:::
+
+::: column
+```{r}
+matrix_example <- matrix(
+  data = c(5, 3, 1, 7, 4, 10),
+  nrow = 3,
+  byrow = TRUE
+)
+
+heatmap(
+  x = matrix_example,
+  Rowv = NA,
+  Colv = NA,
+  scale = "none"
+)
+```
+:::
+:::::
+
+What do you notice? What do you wonder?
+::::::
+
+::: {.callout-note icon="false"}
+## Exploring Matrices and Visualizing with Heatmaps
+
+Use the interactive code block below to create a matrix called `matrix_example_2`. Modify the values in the `data`, `nrow`, and `byrow` (TRUE or FALSE) arguments to explore their meanings. Click the "Run Code" button to see the results. Based on your exploration, what do you think each of these arguments does?
+
+```{webr}
+matrix_example_2 <- matrix(
+  data = c(6, 2, 4, 5, 6, 1, 3, 2),
+  nrow = 4,
+  byrow = TRUE
+)
+
+print(matrix_example_2)
+```
+
+Once you've created your matrix, use the code block below to generate a heatmap of `matrix_example_2`.
+
+```{webr}
+heatmap(
+  x = matrix_example_2,
+  Rowv = NA,
+  Colv = NA,
+  scale = "none"
+)
+```
+
+Observe how the matrix values are represented in the heatmap. Experiment by changing the matrix values and regenerating the heatmap to see how it changes.
+:::
+
+::: {.callout-note icon="false"}
+## Visualizing Social Media Platform Overlaps
+
+@tbl-sm-overlaps shows the percentage of active users (age 16+) outside China who also use other social media platforms.
+
+|   | Using Youtube | Using Facebook | Using WhatsApp | Using Instagram | Using TikTok |
+|------------|------------|------------|------------|------------|------------|
+| Youtube users | 100 | 74.6 | 70.7 | 76.9 | 48.4 |
+| Facebook users | 73.5 | 100 | 73.3 | 77.9 | 53.2 |
+| WhatsApp users | 75.3 | 77.8 | 100 | 78.8 | 49.9 |
+| Instagram users | 77.1 | 80.5 | 76.6 | 100 | 53.7 |
+| TikTok users | 77.2 | 81.9 | 72.5 | 80.1 | 100 |
+
+: Social media platform audience overlaps. Source: [DataReportal](https://datareportal.com/social-media-users){target="_blank"} {#tbl-sm-overlaps}
+
+1.  Use the data from @tbl-sm-overlaps to create a matrix in R and name it `matrix_sm_overlaps`.
+
+2.  Assign appropriate row and column names using the `rownames()` and `colnames()` functions to represent the social media platforms.
+
+3.  Visualize the overlaps by creating a heatmap from the matrix.
+
+```{webr}
+#| exercise: ex_1
+
+matrix_sm_overlaps <- matrix(
+  data = ______,
+  nrow = ______,
+  byrow = ______,
+)
+
+rownames(matrix_sm_overlaps) <- c("Youtube users", ______)
+colnames(matrix_sm_overlaps) <- c("Using Youtube", ______)
+
+heatmap(
+  x = ______,
+  Rowv = _____,
+  Colv = _____,
+  scale = _____
+)
+```
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## Are You Ready for More?
+
+Take a look at the code below and think about what it's doing.
+
+```{r}
+#| echo: true
+
+matrix_example_3 <- matrix(
+  data = c(0, 1, 0, 1, 0, 1, 0, 1, 0),
+  nrow = 3,
+  byrow = TRUE
+)
+
+red_blue <- colorRampPalette(
+  colors = c("red", "blue")
+)
+
+heatmap(
+  x = matrix_example_3,
+  Rowv = NA,
+  Colv = NA,
+  labRow = NA,
+  labCol = NA,
+  scale = "none",
+  col = red_blue(2)
+)
+
+```
+
+Now, using the idea from the previous code, create a chessboard pattern as a heatmap of a matrix! Your result should look similar to the example shown in @fig-chessboard.
+
+```{r}
+#| label: fig-chessboard
+#| fig-cap: "A chessboard"
+mtrx_cb <- matrix(
+  data = rep(c(rep(c(1, 0), 4), rep(c(0, 1), 4)), 4),
+  ncol = 8,
+  byrow = TRUE
+)
+
+bl_wh <- colorRampPalette(c("white", "black"))
+
+heatmap(
+  x = mtrx_cb,
+  Rowv = NA,
+  Colv = NA,
+  labRow = NA,
+  labCol = NA,
+  scale = "none",
+  col = bl_wh(2)
+)
+```
+
+```{webr}
+#| exercise: ex_2
+
+matrix_chessboard <- matrix(
+  data = ______,
+  nrow = ______,
+  byrow = ______,
+)
+
+black_white <- colorRampPalette(
+  colors = c(______)
+)
+
+heatmap(
+  x = ______,
+  Rowv = NA,
+  Colv = NA,
+  labRow = NA,
+  labCol = NA,
+  scale = "none",
+  col = ______
+)
+```
+:::
+
+:::: {.callout-note icon="false"}
+## Exploring Data Representations: From Matrix to 3D Model
+
+Heatmaps are just one way to represent a matrix. We can also create a 3D model from a matrix. Below, you’ll find three representations of the same data:
+
+::: {#fig-three-reps layout-ncol="3"}
+![Matrix](a_matrix.png)
+
+![Heatmap](2D_matrix.png)
+
+![3D model](3D_matrix.png)
+
+Different representations of the same data
+:::
+
+1.  Compare and contrast these three representations. What are the strengths and weaknesses of each?
+
+2.  Now, focus on the 3D visualization. How would you create such a 3D model starting with a matrix? Identify the steps or processes involved.
+::::
+
+::: {.callout-important icon="false"}
+## Summary
+
+Heatmaps and 3D visualizations are practical and engaging ways to represent data from matrices. A matrix, which is a structured grid of numbers organized in rows and columns, allows us to summarize and analyze data effectively. For instance, a heatmap can be used to visually represent the values in a matrix with color gradients, making patterns, overlaps, or trends easy to spot.
+
+Imagine you’re analyzing social media usage overlaps, where each cell in the matrix represents the percentage of users shared between platforms. A heatmap of this matrix would use colors to highlight these overlaps, with stronger colors for higher percentages. Similarly, we can take this idea further by creating a 3D visualization, where the numbers in the matrix determine the height of each block in a 3D model.
+
+Through this lesson, you saw how matrices can transform from abstract numbers into powerful visual tools. Heatmaps offer an intuitive way to see relationships at a glance, while 3D visualizations provide a tangible, spatial perspective on the same data. Together, these representations help uncover insights and bring data to life.
+:::
+
+## Lesson 3
+
+### Modeling the World: Topography with Matrices
+
+Let's bring matrices to life with 3D printing!
+
+::: {.callout-note .lightbox icon="false"}
+## Notice and Wonder
+
+![Image: konsepsi.wordpress.com](merapi_model_1.jpg)
+
+What do you notice? What do you wonder?
+:::
+
+::: {.callout-note icon="false"}
+## Exploring Elevation Data Online
+
+The Shuttle Radar Topography Mission (SRTM) was a NASA mission that mapped the Earth's surface to produce high-resolution elevation data. This data is invaluable for understanding topography and has wide-ranging applications, from environmental modeling and urban planning to disaster risk assessment. By representing elevation data in a matrix form, we can use mathematical tools to analyze and visualize terrains, making it easier to study and solve real-world problems.
+
+1.  What type of information does the SRTM elevation data provide? How could it be used in real-world applications?
+
+2.  Explore [the Derek Watkins' Tile Downloader website](https://dwtkns.com/srtm30m/){target="_blank"}. How is the elevation data presented? What do "30-meter resolution" and "tile" mean?
+
+3.  How might the data from a single tile be represented as a matrix? What does each value in the matrix represent in terms of elevation?
+
+4.  If you wanted to use this data to create a physical 3D model, what steps would you take, starting from the downloaded data?
+:::
+
+::: {.callout-note icon="false"}
+## Elevating Data into 3D Models
+
+1.  How can elevation values in a matrix represent the physical features of a landscape?
+
+2.  If we visualize this matrix as a grid, how would the differences between adjacent elevation values appear in a 3D model?
+
+3.  What steps are needed to turn a matrix of elevation data into a 3D model? Can you describe these steps in terms of inputs, processes, and outputs?
+:::
+
+::: {.callout-tip collapse="true" icon="false"}
+## Are You Ready for More?
+
+One way to create a 3D model from elevation data is by using R programming with packages such as [{rayshader}](https://CRAN.R-project.org/package=rayshader){target="_blank"}, [{terra}](https://CRAN.R-project.org/package=terra){target="_blank"}, and [{raster}](https://CRAN.R-project.org/package=raster){target="_blank"}. Below are the codes that will help you generate the 3D model of Mount Merapi.
+
+``` r
+# Step 1
+library(rayshader)
+library(terra)
+library(raster)
+
+# Step 2
+S08E110 <- terra::rast("S08E110.hgt")
+merapi_boundaries <- raster::extent(
+  110.3967, 110.4967,
+  -7.590278, -7.490278
+)
+merapi_matrix <- terra::crop(
+  x = S08E110,
+  y = merapi_boundaries
+) |> 
+  rayshader::raster_to_matrix()
+
+# Step 3
+merapi_hillshade <- sphere_shade(
+  heightmap = merapi_matrix
+)
+plot_3d(
+  hillshade = merapi_hillshade,
+  heightmap = merapi_matrix,
+  zscale = 30
+)
+
+# Step 4
+save_3dprint(
+  filename = "merapi_3d.stl",
+  maxwidth = 150,
+  unit = "mm"
+)
+```
+
+1.  Can you explain what each step of the code does?
+
+2.  What do you think the result of the code will look like? You can download the resulting STL file [here](https://github.com/ydkristanto/advanced-3d-printing-jku/blob/main/merapi_3d.stl){target="_blank"}. To view it, you can use an STL viewer, such as [viewstl.com](https://www.viewstl.com/){target="_blank"}.
+:::
+
+::: {.callout-note icon="false"}
+## 3D Printing the Model
+
+Let's print the 3D model! Use the STL file from the previous activity to print the model using a 3D printer.
+:::
+
+:::: callout-important
+## Summary
+
+Matrices are a powerful tool for representing and analyzing data in a structured way. By converting elevation data into a matrix, we can visualize topographic features like mountains and valleys. In this lesson, we used matrices to represent elevation data from the Shuttle Radar Topography Mission (SRTM), and then transformed that data into a 3D model, simulating the physical features of the Earth’s surface. For example, we modeled and 3D-printed a representation of Mount Merapi, a well-known active volcano in Indonesia. The outcome of this process is shown in @fig-merapi-model.
+
+::: {#fig-merapi-model layout-ncol="2"}
+![3D model of Mount Merapi](merapi_3d_model.png)
+
+![3D printed model of Mount Merapi](printed_merapi.jpeg)
+
+3D model and 3D printed model of Mount Merapi, created from elevation data, showcasing the transformation from digital representation to physical model.
+:::
+
+This exercise helps us see how abstract data can be turned into meaningful, real-world representations, such as terrain models, and how mathematics can be applied to understand and visualize landscapes. Through this lesson, you learned how matrices can be used to model topography and how 3D printing brings these models
+::::
+
+## Practice
+
+1.  Emma wants to know the prices of iPhones on Amazon. She surveys the prices for the 128 GB, 256 GB, and 512 GB models of the iPhone 15 Plus, iPhone 16, iPhone 16 Plus, and iPhone 16 Pro. The prices she found are as follows (in euros):
+
+    -   For 128 GB: iPhone 15 Plus (€919), iPhone 16 (€876), iPhone 16 Plus (€1078), iPhone 16 Pro (€1143)
+
+    -   For 256 GB: iPhone 15 Plus (€1037), iPhone 16 (€1055), iPhone 16 Plus (€1188), iPhone 16 Pro (€1294)
+
+    -   For 512 GB: iPhone 15 Plus (€1289), iPhone 16 (€1269), iPhone 16 Plus (€1354), iPhone 16 Pro (€1592)
+
+    Represent this data as a matrix!
+
+2.  In the interactive code block below, create a matrix named `matrix_iphone_prices` to store the iPhone prices for different models and storage sizes. Then, visualize the matrix as a heatmap to better understand the price differences.
+
+    ```{webr}
+    #| exercise: practice_2
+
+    matrix_iphone_prices <- matrix(
+      data = c(______),
+      nrow = ______,
+      byrow = ______
+    )
+
+    colnames(matrix_iphone_prices) <- c(______)
+    rownames(matrix_iphone_prices) <- c(______)
+
+    heatmap(
+      x = ______,
+      Rowv = NA,
+      Colv = NA,
+      scale = "none"
+    )
+    ```
+
+3.  @fig-practice-3 shows a 3D visualization of a matrix. Write down the matrix with approximate values.
+
+    ![3D visualization of a matrix](matrix_plot_gg.png){#fig-practice-3}
+
+    ```{r}
+    matrix_practice_3 <- matrix(
+      data = c(
+        2, 4, 2, 4,
+        6, 3, 6, 3,
+        2, 3, 2, 3,
+        6, 4, 6, 4
+      ),
+      nrow = 4,
+      byrow = TRUE
+    )
+    ```
+
+4.  Model the topography of your selected places and then print the 3D models!
+::::::::::::::::::::::::::
