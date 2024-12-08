@@ -517,23 +517,23 @@ Through this lesson, you saw how matrices can transform from abstract numbers in
 ::: {.callout-important icon="false"}
 ## Glossary Entries
 
--   `matrix()` function
+-   **`matrix()` function**
 
     The `matrix()` function in R is used to create a matrix. You provide a set of data, define the number of rows (`nrow`), and specify whether the data should be filled by rows or columns using the `byrow` argument. The syntax is `matrix(data, nrow, byrow)`.
 
--   `heatmap()` function
+-   **`heatmap()` function**
 
     The `heatmap()` function in R is used to create a heatmap from a matrix or data frame. It visually represents the values in the matrix using colors, helping to highlight patterns and trends. The function has arguments like `x` (the data matrix), `Rowv`, `Colv` (for hierarchical clustering), and `scale` (to adjust the scaling of the data).
 
--   `rep()` function
+-   **`rep()` function**
 
     The `rep()` function in R is used to repeat elements of a vector a specified number of times. It’s helpful for creating matrices where the data follows a repetitive pattern.
 
--   3D model
+-   **3D model**
 
     A 3D model is a three-dimensional representation of data, where data points are placed in a three-dimensional space based on their values. This model can provide more depth and perspective compared to a matrix or 2D heatmap, making it useful for visualizing complex data relationships.
 
--   `colorRampPalette()`
+-   **`colorRampPalette()`**
 
     The `colorRampPalette()` function in R is used to create a sequence of colors that can be applied to a heatmap. It takes a range of colors and interpolates between them to generate a smooth gradient.
 :::
