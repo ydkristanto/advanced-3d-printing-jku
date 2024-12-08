@@ -35,7 +35,9 @@ editor_options:
 
 Dive into our interactive lessons that bring matrices to life through data visualization and 3D modeling. From transforming data into stunning heatmaps to creating physical 3D models with 3D printing, you’ll experience mathematics in a hands-on and engaging way. Start your journey today and turn abstract concepts into tangible results!
 
+::: column-screen
 ![](lake_toba_indonesia-01.png){fig-alt="Three images of Lake Toba: Left shows a scenic view of Lake Toba from Tele Samosir, Middle displays a plot map of Lake Toba's geographical layout, and Right presents a 3D model of Lake Toba's topography."}
+:::
 
 ::::: {layout="[1,1]"}
 ::: {#teachers}
