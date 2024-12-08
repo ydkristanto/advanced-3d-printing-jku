@@ -535,7 +535,7 @@ Through this lesson, you saw how matrices can transform from abstract numbers in
 
 -   `colorRampPalette()`
 
-    The colorRampPalette() function in R is used to create a sequence of colors that can be applied to a heatmap. It takes a range of colors and interpolates between them to generate a smooth gradient.
+    The `colorRampPalette()` function in R is used to create a sequence of colors that can be applied to a heatmap. It takes a range of colors and interpolates between them to generate a smooth gradient.
 :::
 
 ## Lesson 3
