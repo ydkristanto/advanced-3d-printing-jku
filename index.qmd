@@ -22,7 +22,7 @@ format:
     anchor-sections: true
     smooth-scroll: true
     code-link: true
-image: "printed_merapi.jpeg"
+image: "https://ydkristanto.github.io/advanced-3d-printing-jku/printed_merapi.jpeg"
 image-alt: "3D printed silver model of Mount Merapi photographed from the 12th floor in Linz, Austria, with a detailed view of the topographic features."
 copyright: "© 2024 Yosep Dwi Kristanto"
 license: "CC BY"

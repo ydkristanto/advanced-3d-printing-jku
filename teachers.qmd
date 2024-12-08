@@ -23,7 +23,7 @@ format:
     anchor-sections: true
     smooth-scroll: true
     code-link: true
-image: "printed_merapi.jpeg"
+image: printed_merapi.jpeg
 image-alt: "3D printed silver model of Mount Merapi photographed from the 12th floor in Linz, Austria, with a detailed view of the topographic features."
 copyright: "© 2024 Yosep Dwi Kristanto"
 license: "CC BY"
@@ -1044,7 +1044,7 @@ Matrices are a powerful tool for representing and analyzing data in a structured
 ::: {#fig-merapi-model layout-ncol="2"}
 ![3D model of Mount Merapi](merapi_3d_model.png)
 
-![3D printed model of Mount Merapi](printed_merapi.jpeg)
+![3D printed model of Mount Merapi](printed_merapi.jpeg){.preview-image}
 
 3D model and 3D printed model of Mount Merapi, created from elevation data, showcasing the transformation from digital representation to physical model.
 :::
