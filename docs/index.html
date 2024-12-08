@@ -45,6 +45,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,14 +82,14 @@ ul.task-list li input[type="checkbox"] {
 
 <meta property="og:title" content="Bringing Data to Life with Matrices and Models – Maths Exploration with 3D Printing">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://ydkristanto.github.io/advanced-3d-printing-jku/printed_merapi.jpeg">
+<meta property="og:image" content="https://ydkristanto.github.io/advanced-3d-printing-jku/lake_toba_indonesia-01.png">
 <meta property="og:site_name" content="Maths Exploration with 3D Printing">
-<meta property="og:image:alt" content="3D printed silver model of Mount Merapi photographed from the 12th floor in Linz, Austria, with a detailed view of the topographic features.">
+<meta property="og:image:alt" content="Three images of Lake Toba: Left shows a scenic view of Lake Toba from Tele Samosir, Middle displays a plot map of Lake Toba's geographical layout, and Right presents a 3D model of Lake Toba's topography.">
 <meta name="twitter:title" content="Bringing Data to Life with Matrices and Models – Maths Exploration with 3D Printing">
 <meta name="twitter:description" content="">
-<meta name="twitter:image" content="https://ydkristanto.github.io/advanced-3d-printing-jku/printed_merapi.jpeg">
+<meta name="twitter:image" content="https://ydkristanto.github.io/advanced-3d-printing-jku/lake_toba_indonesia-01.png">
 <meta name="twitter:creator" content="@yosepdwik">
-<meta name="twitter:image:alt" content="3D printed silver model of Mount Merapi photographed from the 12th floor in Linz, Austria, with a detailed view of the topographic features.">
+<meta name="twitter:image:alt" content="Three images of Lake Toba: Left shows a scenic view of Lake Toba from Tele Samosir, Middle displays a plot map of Lake Toba's geographical layout, and Right presents a 3D model of Lake Toba's topography.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -190,6 +193,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="looking-to-explore-matrices-and-3d-models" class="level2">
 <h2 class="anchored" data-anchor-id="looking-to-explore-matrices-and-3d-models">Looking to Explore Matrices and 3D Models?</h2>
 <p>Dive into our interactive lessons that bring matrices to life through data visualization and 3D modeling. From transforming data into stunning heatmaps to creating physical 3D models with 3D printing, you’ll experience mathematics in a hands-on and engaging way. Start your journey today and turn abstract concepts into tangible results!</p>
+<p><a href="lake_toba_indonesia-01.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="lake_toba_indonesia-01.png" class="img-fluid" alt="Three images of Lake Toba: Left shows a scenic view of Lake Toba from Tele Samosir, Middle displays a plot map of Lake Toba's geographical layout, and Right presents a 3D model of Lake Toba's topography."></a></p>
 <div>
 
 </div>
@@ -658,9 +662,41 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/ydkristanto/advanced-3d-printing-jku/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ydkristanto/advanced-3d-printing-jku/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"openEffect":"zoom","closeEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/ydkristanto/advanced-3d-printing-jku/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ydkristanto/advanced-3d-printing-jku/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
