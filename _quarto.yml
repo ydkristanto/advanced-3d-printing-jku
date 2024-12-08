@@ -3,8 +3,9 @@ project:
   output-dir: docs
 
 website: 
-  title: "Maths Exploration with 3D Printing"
+  title: "Mathematics Exploration with 3D Printing"
   favicon: "favicon.png"
+  google-analytics: G-VJBS6JNPJB
   site-url: "https://ydkristanto.github.io/advanced-3d-printing-jku/"
   page-navigation: true
   bread-crumbs: true
@@ -19,3 +20,10 @@ website:
       - students.qmd
       - icon: github
         href: https://github.com/ydkristanto/advanced-3d-printing-jku
+      - icon: person-circle
+        href: https://people.usd.ac.id/~ydkristanto/
+  page-footer: 
+    left: | 
+      © 2024 Mathematics Exploration with 3D Printing
+    right: | 
+      This website was built with [Quarto](https://quarto.org/){.external target="_blank"}.
