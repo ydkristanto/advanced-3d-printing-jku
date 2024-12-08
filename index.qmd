@@ -1,6 +1,5 @@
 ---
-title: "Mathematics Exploration with 3D Printing"
-subtitle: "Bringing Data to Life with Matrices and Models"
+title: "Bringing Data to Life with Matrices and Models"
 keywords: 
   - matrix
   - data visualization
@@ -18,12 +17,11 @@ date-modified: 2024/12/07
 lightbox: true
 format:
   live-html:
-    toc: true
     anchor-sections: true
     smooth-scroll: true
     code-link: true
 image: "https://ydkristanto.github.io/advanced-3d-printing-jku/printed_merapi.jpeg"
-image-alt: "3D printed silver model of Mount Merapi photographed from the 12th floor in Linz, Austria, with a detailed view of the topographic features."
+image-alt: "Three images of Lake Toba: Left shows a scenic view of Lake Toba from Tele Samosir, Middle displays a plot map of Lake Toba's geographical layout, and Right presents a 3D model of Lake Toba's topography."
 copyright: "© 2024 Yosep Dwi Kristanto"
 license: "CC BY"
 editor: visual

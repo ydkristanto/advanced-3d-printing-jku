@@ -655,6 +655,10 @@ This exercise helps us see how abstract data can be turned into meaningful, real
 
     Information that describes the height of a location on the Earth's surface relative to sea level. This data is often represented in a matrix format, where each value corresponds to the elevation at a specific point on the terrain.
 
+-   **Hillshade**
+
+    A grayscale representation of a 3D surface, created by simulating how light and shadows fall on terrain based on elevation data. Hillshading is often used in mapping and 3D visualization to enhance the perception of depth and topography.
+
 -   **Shuttle Radar Topography Mission (SRTM)**
 
     A NASA mission that used radar to measure the Earth's surface and create detailed elevation maps. The SRTM data is widely used for various applications, including environmental modeling, urban planning, and disaster risk assessment.

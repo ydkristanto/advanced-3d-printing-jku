@@ -107,6 +107,82 @@ Students will be able to represent real-world data (such as temperature or topog
 
 -   Students can represent data in matrix form.
 
+### Glossary Entries
+
+#### Lesson 1
+
+-   **Data visualization**
+
+    The process of turning numbers or information into pictures, graphs, or charts so that patterns and trends are easier to understand.
+
+-   **Heatmap**
+
+    A type of chart that uses colors to show patterns in data. For example, warmer colors (like red or orange) can show higher values, and cooler colors (like blue) can show lower values.
+
+-   **Matrix**
+
+    A grid of numbers organized in rows and columns, like a table, that helps us organize and analyze data.
+
+#### Lesson 2
+
+-   `matrix()` function
+
+    The `matrix()` function in R is used to create a matrix. You provide a set of data, define the number of rows (`nrow`), and specify whether the data should be filled by rows or columns using the `byrow` argument. The syntax is `matrix(data, nrow, byrow)`.
+
+-   `heatmap()` function
+
+    The `heatmap()` function in R is used to create a heatmap from a matrix or data frame. It visually represents the values in the matrix using colors, helping to highlight patterns and trends. The function has arguments like `x` (the data matrix), `Rowv`, `Colv` (for hierarchical clustering), and `scale` (to adjust the scaling of the data).
+
+-   `rep()` function
+
+    The `rep()` function in R is used to repeat elements of a vector a specified number of times. It’s helpful for creating matrices where the data follows a repetitive pattern.
+
+-   3D model
+
+    A 3D model is a three-dimensional representation of data, where data points are placed in a three-dimensional space based on their values. This model can provide more depth and perspective compared to a matrix or 2D heatmap, making it useful for visualizing complex data relationships.
+
+-   `colorRampPalette()`
+
+    The `colorRampPalette()` function in R is used to create a sequence of colors that can be applied to a heatmap. It takes a range of colors and interpolates between them to generate a smooth gradient.
+
+#### Lesson 3
+
+-   **STL file**
+
+    A file format commonly used for 3D printing, which stores 3D models in a way that is compatible with most 3D printers. The file contains the surface geometry of the model without any color or texture information. STL stands for "stereolithography," a technology used in 3D printing.
+
+-   **Elevation data**
+
+    Information that describes the height of a location on the Earth's surface relative to sea level. This data is often represented in a matrix format, where each value corresponds to the elevation at a specific point on the terrain.
+
+-   **Hillshade**
+
+    A grayscale representation of a 3D surface, created by simulating how light and shadows fall on terrain based on elevation data. Hillshading is often used in mapping and 3D visualization to enhance the perception of depth and topography.
+
+-   **Shuttle Radar Topography Mission (SRTM)**
+
+    A NASA mission that used radar to measure the Earth's surface and create detailed elevation maps. The SRTM data is widely used for various applications, including environmental modeling, urban planning, and disaster risk assessment.
+
+-   **3D printing**
+
+    A manufacturing process that creates three-dimensional objects by adding material layer by layer based on a digital model. 3D printing allows for the production of complex shapes that might be difficult or impossible to create using traditional methods.
+
+-   **Raster data**
+
+    A type of spatial data represented in grid cells or pixels. Each cell holds a value that represents information such as elevation, temperature, or land cover. Raster data is often used to represent continuous phenomena like elevation or weather patterns.
+
+-   **rayshader**
+
+    An R package used to convert raster or matrix data into 3D models and visualizations. It allows users to create shaded relief maps, terrain models, and 3D plots based on elevation or other spatial data.
+
+-   **terra**
+
+    An R package used for spatial data analysis, specifically designed to handle large raster datasets. It provides tools for reading, manipulating, and processing geospatial data, including elevation data.
+
+-   **raster**
+
+    An R package for working with raster data, including functions for reading, manipulating, and analyzing geospatial raster data. The package supports a variety of raster formats and is commonly used for tasks like terrain analysis.
+
 ### Additional Resources
 
 -   Google/PowerPoint slides.
@@ -129,12 +205,12 @@ Students will be able to represent real-world data (such as temperature or topog
 
 ------------------------------------------------------------------------
 
-### Task 1.1
+### Task 1.1: Data Talks
 
 The purpose of this Data Talks task is to engage students in observing and interpreting trends in data through visualization, fostering curiosity and initial reasoning about temperature patterns. This task sets the stage for exploring mathematical representations in subsequent tasks.
 
 ::: {.callout-note icon="false"}
-### Data Talks
+## Student Facing
 
 ```{r}
 yog_climate <- read_csv(
@@ -235,12 +311,12 @@ This task introduces students to interpreting graphical representations of data 
 
 ------------------------------------------------------------------------
 
-### Task 1.2
+### Task 1.2: Interpreting and Redesigning Data Representations
 
 The purpose of this task is to develop students' critical thinking and data communication skills. Students will evaluate the effectiveness of a line chart for representing temperature trends, identify its limitations, and explore how to improve the visualization for clearer communication. This task serves as a stepping stone to introduce alternative representations, such as heatmaps, in the subsequent activity.
 
 ::: {.callout-note icon="false"}
-## Interpreting and Redesigning Data Representations
+## Student Facing
 
 1.  What is the main message or insight about Yogyakarta's average monthly temperature (2011–2020) as shown in @fig-temp-yog?
 
@@ -275,12 +351,12 @@ This task sets the stage for introducing heatmaps by encouraging students to cri
 
 ------------------------------------------------------------------------
 
-### Task 1.3
+### Task 1.3: Are You Ready for More?
 
 The purpose of this task is to help students analyze and interpret a heatmap as an alternative data visualization. Students will compare the heatmap with the original line charts, evaluate its advantages in communicating patterns and trends, and explore the idea of representing the data as a numerical matrix. This task builds understanding of heatmaps and lays the groundwork for introducing matrices as structured tools for numerical representation.
 
 ::: {.callout-tip icon="false"}
-## Are You Ready for More?
+## Student Facing
 
 @fig-heatmap-yog-temp is a visual representation provided by your friend Alex as an alternative to convey the same message about Yogyakarta's average monthly temperature (2011–2020).
 
@@ -346,12 +422,12 @@ This task introduces heatmaps as an alternative visualization, encouraging stude
 
 ------------------------------------------------------------------------
 
-### Task 1.4
+### Task 1.4: Decoding Data with Matrices
 
 This task introduces students to using matrices to extract, interpret, and analyze numerical data. Students will develop the ability to locate specific data points in a matrix, describe trends across rows or columns, and compare data values to draw meaningful conclusions.
 
 ::: {.callout-note icon="false"}
-## Decoding Data with Matrices
+## Student Facing
 
 The matrix below shows the average temperature for each quarter at Bromo Tengger Semeru National Park from 2016 to 2020. Each row corresponds to a year (2016–2020), and each column represents a quarter: Q1 (Jan–Mar), Q2 (Apr–Jun), Q3 (Jul–Sep), and Q4 (Oct–Dec).
 
@@ -424,12 +500,12 @@ This task helps students practice interpreting matrices by locating specific dat
 
 ------------------------------------------------------------------------
 
-### Task 1.5
+### Task 1.5: Are You Ready for More?
 
 This task aims to deepen students' understanding of summarizing data by reducing a matrix's dimensionality. Students analyze how averages are calculated across rows and learn to articulate data transformation processes.
 
-::: {.callout-tip icon="false"}
-## Are You Ready for More?
+::: {.callout-tip appearance="simple" icon="false"}
+## Student Facing
 
 To answer the third question, your friend Paulina created a new matrix that shows the average temperature for each year. The matrix is shown below. Can you explain in detail what she did to create this matrix?
 
@@ -490,12 +566,12 @@ Using a matrix to represent temperature data makes it easier to analyze and spot
 
 ------------------------------------------------------------------------
 
-### Task 2.1
+### Task 2.1: Notice and Wonder
 
 The purpose of this task is to introduce students to the relationship between R code and the resulting heatmap. By analyzing a simple code example and the resulting heatmap, students will learn how data is structured in a matrix and how it is visually represented through a heatmap. This task serves as an introduction to the basics of coding and data visualization in R.
 
 :::::: {.callout-note icon="false"}
-## Notice and Wonder
+## Student Facing
 
 ::::: {.row layout="[1, 1]"}
 ::: column
@@ -556,12 +632,12 @@ In this task, students should connect the matrix values and the heatmap’s visu
 
 ------------------------------------------------------------------------
 
-### Task 2.2
+### Task 2.2: Exploring Matrices and Visualizing with Heatmaps
 
 The purpose of this task is to deepen students' understanding of how to manipulate matrices in R and how their changes affect the resulting heatmap visualization. By experimenting with matrix parameters such as `data`, `nrow`, and `byrow`, students will gain insights into how these parameters structure the matrix and how they influence the heatmap representation. The task provides an interactive, hands-on opportunity to learn about matrix construction and data visualization through heatmaps.
 
 ::: {.callout-note icon="false"}
-## Exploring Matrices and Visualizing with Heatmaps
+## Student Facing
 
 Use the interactive code block below to create a matrix called `matrix_example_2`. Modify the values in the `data`, `nrow`, and `byrow` (TRUE or FALSE) arguments to explore their meanings. Click the "Run Code" button to see the results. Based on your exploration, what do you think each of these arguments does?
 
@@ -603,12 +679,12 @@ In this task, students are encouraged to experiment with modifying the matrix pa
 
 ------------------------------------------------------------------------
 
-### Task 2.3
+### Task 2.3: Visualizing Social Media Platform Overlaps
 
 The purpose of this task is to help students apply their understanding of matrices and heatmaps to a real-world data set, specifically focusing on social media platform overlaps. Through this task, students will learn how to create and manipulate matrices in R, assign appropriate row and column names, and visualize data using a heatmap. The goal is for students to connect the concept of matrix manipulation to visualizing complex relationships (such as overlaps in social media platform usage) and to understand how heatmaps can effectively represent this data.
 
 ::: {.callout-note icon="false"}
-## Visualizing Social Media Platform Overlaps
+## Student Facing
 
 @tbl-sm-overlaps shows the percentage of active users (age 16+) outside China who also use other social media platforms.
 
@@ -685,12 +761,12 @@ This task involves a series of steps that allow students to practice both matrix
 
 ------------------------------------------------------------------------
 
-### Task 2.4
+### Task 2.4: Are You Ready for More?
 
 The goal of this task is to deepen students' understanding of how to manipulate matrices and customize heatmaps using colors. By creating a chessboard pattern as a heatmap, students will learn how to represent binary data visually, adjust color schemes using `colorRampPalette`, and work with larger matrices to create more complex visualizations. This task builds on the previous ones by incorporating new elements like a custom color palette and a more structured matrix layout, helping students see how flexibility in visualization tools can be used to convey different types of data.
 
 ::: {.callout-tip icon="false"}
-## Are You Ready for More?
+## Student Facing
 
 Take a look at the code below and think about what it's doing.
 
@@ -804,12 +880,12 @@ Encourage students to experiment with different color schemes using `colorRampPa
 
 ------------------------------------------------------------------------
 
-### Task 2.5
+### Task 2.5: Exploring Data Representations–From Matrix to 3D Model
 
 The purpose of this task is to explore different data representations (matrix, heatmap, 3D model) and to help students understand how data can be visualized in various forms, each with its own advantages and limitations. The task also introduces students to the concept of creating 3D models based on matrices.
 
 :::: {.callout-note icon="false"}
-## Exploring Data Representations: From Matrix to 3D Model
+## Student Facing
 
 Heatmaps are just one way to represent a matrix. We can also create a 3D model from a matrix. Below, you’ll find three representations of the same data:
 
@@ -860,12 +936,12 @@ Through this lesson, you saw how matrices can transform from abstract numbers in
 
 ------------------------------------------------------------------------
 
-### Task 3.1
+### Task 3.1: Notice and Wonder
 
 The purpose of this task is to encourage students to observe and reflect on the 3D model of Mount Merapi and make connections between the visual representation and the underlying data it represents. This will also help them understand how 3D models can be used to convey geographic and scientific information.
 
 ::: {.callout-note .lightbox icon="false"}
-## Notice and Wonder
+## Student Facing
 
 ![Image: konsepsi.wordpress.com](merapi_model_1.jpg)
 
@@ -896,12 +972,12 @@ This task helps students engage with the concept of 3D modeling by having them r
 
 ------------------------------------------------------------------------
 
-### Task 3.2
+### Task 3.2: Exploring Elevation Data Online
 
 The purpose of this task is to introduce students to the Shuttle Radar Topography Mission (SRTM) data and its representation as elevation data. Students will explore how the data is structured into tiles, understand the meaning of terms like "30-meter resolution," and recognize how this data can be used for real-world applications like urban planning and environmental modeling. By considering the elevation data as a matrix, students will learn how to analyze and visualize terrain information.
 
 ::: {.callout-note icon="false"}
-## Exploring Elevation Data Online
+## Student Facing
 
 The Shuttle Radar Topography Mission (SRTM) was a NASA mission that mapped the Earth's surface to produce high-resolution elevation data. This data is invaluable for understanding topography and has wide-ranging applications, from environmental modeling and urban planning to disaster risk assessment. By representing elevation data in a matrix form, we can use mathematical tools to analyze and visualize terrains, making it easier to study and solve real-world problems.
 
@@ -932,12 +1008,12 @@ Teachers should support students in connecting the SRTM data to real-world appli
 
 ------------------------------------------------------------------------
 
-### Task 3.3
+### Task 3.3: Elevating Data into 3D Models
 
 The purpose of this task is to help students understand how elevation data can be represented in a matrix and how such data can be used to create a 3D model of a landscape. It encourages students to explore the relationship between data in a matrix and its representation in the real world, particularly in terms of 3D visualizations.
 
 ::: {.callout-note icon="false"}
-## Elevating Data into 3D Models
+## Student Facing
 
 1.  How can elevation values in a matrix represent the physical features of a landscape?
 
@@ -960,12 +1036,12 @@ This task helps students understand how mathematical data in the form of a matri
 
 ------------------------------------------------------------------------
 
-### Task 3.4
+### Task 3.4: Are You Ready for More?
 
 The purpose of this task is to guide students through a more advanced application of elevation data to create 3D models using R programming. This task introduces students to the process of working with geographic data and visualization tools, using specific R packages like rayshader, terra, and raster. It encourages students to explore coding as a tool for transforming raw elevation data into 3D printed models.
 
 ::: {.callout-tip icon="false"}
-## Are You Ready for More?
+## Student Facing
 
 One way to create a 3D model from elevation data is by using R programming with packages such as [{rayshader}](https://CRAN.R-project.org/package=rayshader){target="_blank"}, [{terra}](https://CRAN.R-project.org/package=terra){target="_blank"}, and [{raster}](https://CRAN.R-project.org/package=raster){target="_blank"}. Below are the codes that will help you generate the 3D model of Mount Merapi.
 
@@ -1022,12 +1098,12 @@ This task provides an opportunity for students to learn how to transform geograp
 
 ------------------------------------------------------------------------
 
-### Task 3.5
+### Task 3.5: 3D Printing the Model
 
 The purpose of this task is to connect the virtual model of Mount Merapi created from elevation data with the physical world by printing the 3D model using a 3D printer. This task allows students to understand the final step in the 3D model creation process and experience how digital data can be transformed into a tangible object.
 
 ::: {.callout-note icon="false"}
-## 3D Printing the Model
+## Student Facing
 
 Let's print the 3D model! Use the STL file from the previous activity to print the model using a 3D printer.
 :::
