@@ -66,3 +66,9 @@ The video in @fig-vid-overview provides an overview of the lessons, including th
 
 The video "Bringing Data to Life with Matrices and Models: Mathematics Exploration with 3D Printing"
 :::
+
+::: {#ai-assistance-disclaimer .callout-note}
+## AI Assistance Disclaimer
+
+The development of these lessons and task sequences was guided by original ideas and content created by me, the author. While I used AI tools, specifically ChatGPT, to assist in refining the language to ensure the materials are appropriate for the target audience—teachers (for teacher materials) or students (for student materials)—I have personally reviewed and verified all content. Any potential errors, limitations, or inconsistencies in the lessons remain my responsibility as the author, and AI assistance is acknowledged solely as a tool in language refinement.
+:::
