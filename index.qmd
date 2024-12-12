@@ -67,6 +67,12 @@ The video in @fig-vid-overview provides an overview of the lessons, including th
 The video "Bringing Data to Life with Matrices and Models: Mathematics Exploration with 3D Printing"
 :::
 
+::: {#open-tools-code .callout-note}
+## Open Tools and Code
+
+These lessons were developed using [Quarto](https://quarto.org/){target="_blank"}, [Quarto Live](https://r-wasm.github.io/quarto-live/){target="_blank"}, and [RStudio](https://posit.co/products/open-source/rstudio/){target="_blank"}, leveraging the capabilities of [R](https://www.R-project.org/){target="_blank"} with packages like [{tidyverse}](https://www.tidyverse.org/){target="_blank"}, [{plotly}](https://plotly-r.com){target="_blank"}, [{terra}](https://CRAN.R-project.org/package=terra){target="_blank"}, [{raster}](https://CRAN.R-project.org/package=raster){target="_blank"}, and [{rayshader}](https://CRAN.R-project.org/package=rayshader){target="_blank"} for data analysis, visualization, and 3D modeling. The source code is available on [GitHub](https://github.com/ydkristanto/advanced-3d-printing-jku){target="_blank"}. Collaborations are welcome! You can report issues or suggest edits directly in the repository.
+:::
+
 ::: {#ai-assistance-disclaimer .callout-note}
 ## AI Assistance Disclaimer
 
