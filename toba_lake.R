@@ -37,21 +37,36 @@ matrix_toba |>
   plot_3d(
     matrix_toba, zscale = 17,
     fov = 0, theta = 135, zoom = .75, phi = 45,
-    windowsize = c(800, 800),
-    background = "#BCF2F6",
-    soil = TRUE,
-    soil_color_dark = "#593a0e",
-    soil_color_light = "#72601b"
+    windowsize = c(600, 600),
+    soil = TRUE
   )
 render_clouds(
   matrix_toba, zscale = 17, start_altitude = 1000, end_altitude = 1500,
-  attenuation_coef = 2, clear_clouds = TRUE, cloud_cover = .5
+  attenuation_coef = 2, clear_clouds = TRUE, cloud_cover = .6
 )
 render_snapshot()
 save_3dprint(
   filename = "toba_lake.stl",
   maxwidth = 15,
   unit = "mm"
+)
+
+# Movie ----
+phivechalf = 30 + 60 * 1/(1 + exp(seq(-7, 20, length.out = 180)/2))
+phivecfull = c(phivechalf, rev(phivechalf))
+thetavec = -90 + 45 * sin(seq(0,359,length.out = 360) * pi/180)
+zoomvec = 0.45 + 0.2 * 1/(1 + exp(seq(-5, 20, length.out = 180)))
+zoomvecfull = c(zoomvec, rev(zoomvec))
+
+
+render_movie(
+  filename = "press_lake_toba",
+  type = "custom", 
+  frames = 360,
+  fps = 24,
+  phi = phivecfull,
+  zoom = zoomvecfull,
+  theta = thetavec
 )
 
 
