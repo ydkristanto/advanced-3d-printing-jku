@@ -56,3 +56,11 @@ Explore interactive lessons on matrices, data visualization, and 3D modeling, an
 [Student materials](students.qmd)
 :::
 :::::
+
+The video in @fig-vid-overview provides an overview of the lessons, including the instructional design principles and a description of the task sequence. It is also available on [YouTube](https://youtu.be/myBTEAVP1xA "Click to watch the video on YouTube"){target="_blank"}.
+
+::: {#fig-vid-overview}
+{{< video https://youtu.be/myBTEAVP1xA title = 'Bringing Data to Life with Matrices and Models | Mathematics Exploration with 3D Printing' >}}
+
+The video "Bringing Data to Life with Matrices and Models: Mathematics Exploration with 3D Printing"
+:::
