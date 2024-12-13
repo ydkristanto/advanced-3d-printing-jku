@@ -680,7 +680,7 @@ The purpose of this task is to help students apply their understanding of matric
 @tbl-sm-overlaps shows the percentage of active users (age 16+) outside China who also use other social media platforms.
 
 |   | Using Youtube | Using Facebook | Using WhatsApp | Using Instagram | Using TikTok |
-|------------|------------|------------|------------|------------|------------|
+|----|----|----|----|----|----|
 | Youtube users | 100 | 74.6 | 70.7 | 76.9 | 48.4 |
 | Facebook users | 73.5 | 100 | 73.3 | 77.9 | 53.2 |
 | WhatsApp users | 75.3 | 77.8 | 100 | 78.8 | 49.9 |

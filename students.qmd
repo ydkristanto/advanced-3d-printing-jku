@@ -125,7 +125,8 @@ plot_yog_temp <- yog_temp |>
   ) + 
   labs(
     title = "Average Monthly Temperature in Yogyakarta (2011–2020)",
-    y = "Average Temperature (°C)"
+    y = "Average Temperature (°C)",
+    caption = "Data: NASA Prediction Of Worldwide Energy Resources (POWER)"
   )
 ggplotly(plot_yog_temp)
 ```
@@ -173,6 +174,9 @@ plot_yog_heatmap <- yog_temp |>
   theme(
     axis.title = element_blank(),
     axis.text = element_text()
+  ) + 
+  labs(
+    caption = "Data: NASA Prediction Of Worldwide Energy Resources (POWER)"
   )
 ggplotly(plot_yog_heatmap)
 ```
