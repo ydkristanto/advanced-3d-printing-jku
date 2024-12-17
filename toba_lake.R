@@ -45,6 +45,7 @@ render_clouds(
   attenuation_coef = 2, clear_clouds = TRUE, cloud_cover = .6
 )
 render_snapshot()
+render_camera(zoom = 1)
 save_3dprint(
   filename = "toba_lake.stl",
   maxwidth = 15,
